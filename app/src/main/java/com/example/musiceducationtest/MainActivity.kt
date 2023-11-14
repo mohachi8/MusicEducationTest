@@ -57,18 +57,23 @@ class MainActivity : ComponentActivity() {
                         ) {
 
                             // 曲の再生ボタン
-                            Button(onClick = { /*TODO*/ }) {
+                            Button(
+                                onClick = { /*TODO*/ },
+                                colors = ButtonDefaults.buttonColors(Color(0xFFFF7043))
+                            ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Icon(
                                         imageVector = Icons.Default.PlayArrow,
                                         contentDescription = "再生",
-                                        modifier = Modifier.size(40.dp)
+                                        modifier = Modifier.size(40.dp),
+                                        tint = Color.White
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
                                         text = "曲を再生",
                                         fontSize = 16.sp,
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White
                                     )
                                 }
                             }
@@ -88,7 +93,7 @@ class MainActivity : ComponentActivity() {
                                     Box(
                                         modifier = Modifier
                                             .size(100.dp)
-                                            .background(Color.Red)
+                                            .background(Color.Blue)
                                     )
                                     Spacer(modifier = Modifier.width(5.dp))
                                     Icon(
