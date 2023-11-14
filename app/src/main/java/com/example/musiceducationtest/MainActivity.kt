@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Spacer(modifier = Modifier.width(20.dp))
                             Text(
-                                text = "ブロックを並び替えてもとの曲を再現しましょう。",
+                                text = "ブロックを ならびかえて もとの曲を さいげん しましょう。",
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.ExtraBold,
                             )
@@ -93,8 +93,16 @@ class MainActivity : ComponentActivity() {
                                     Box(
                                         modifier = Modifier
                                             .size(100.dp)
-                                            .background(Color.Blue)
-                                    )
+                                            .background(Color.Blue),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "スタート",
+                                            color = Color.White,
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    }
                                     Spacer(modifier = Modifier.width(5.dp))
                                     Icon(
                                         imageVector = Icons.Default.PlayArrow,
@@ -126,6 +134,65 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
+
+                        // 選択肢エリア
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background((Color(0xFFEEEEEE)))
+                                .border(width = 4.dp, color = Color.Black)
+                                .padding(20.dp),
+                        ) {
+                            // 選択肢操作ボタンエリア
+                            Row(
+                                verticalAlignment = Alignment.Bottom
+                            ) {
+                                Text(
+                                    text = "ブロック エリア",
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.ExtraBold,
+                                )
+                                Spacer(modifier = Modifier.width(20.dp))
+                                Button(onClick = { /*TODO*/ }) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.padding(5.dp)
+                                    ) {
+                                        Text(
+                                            text = "えらぶ",
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        Spacer(modifier = Modifier.width(10.dp))
+                                        androidx.compose.material.Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = "えらぶ"
+                                        )
+                                    }
+                                }
+                                Spacer(modifier = Modifier.width(20.dp))
+                                Button(onClick = { /*TODO*/ }) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.padding(5.dp)
+                                    ) {
+                                        Text(
+                                            text = "けす",
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        Spacer(modifier = Modifier.width(10.dp))
+                                        androidx.compose.material.Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = "けす"
+                                        )
+                                    }
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                        }
+
 
                         // ボトムナビゲーションバー
                         Box(modifier = Modifier.fillMaxSize()) {
