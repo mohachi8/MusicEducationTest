@@ -276,10 +276,9 @@ fun MainContent() {
                 modifier = Modifier
                     .background(Color.White)
                     .padding(20.dp)
-                    .heightIn(min = 100.dp, max = 300.dp) // 最小高さ100dp、最大高さ300dp
                     .fillMaxWidth()
             ) {
-                items(30) { index ->
+                items(60) { index ->
                     Box(
                         modifier = Modifier
                             .size(100.dp)
