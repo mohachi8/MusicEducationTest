@@ -1,8 +1,6 @@
 package com.example.musiceducationtest
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
-import android.support.v4.os.IResultReceiver.Default
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -21,10 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musiceducationtest.ui.theme.MusicEducationTestTheme
+import com.example.musiceducationtest.ui.theme.Purple200
+import com.example.musiceducationtest.ui.theme.Purple500
+import com.example.musiceducationtest.ui.theme.Teal200
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +72,8 @@ fun TopBar() {
 @Composable
 fun BottomNavigationBar() {
     Row(
-        modifier = Modifier.background(Color(0xFFEEEEEE))
+        modifier = Modifier.background(Color(0xFFEEEEEE)),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         BottomNavigateButton(
             imageVector = Icons.Default.Clear,
@@ -80,16 +81,38 @@ fun BottomNavigationBar() {
             backgroundColor = Color(0xFF424242)
         )
         Spacer(modifier = Modifier.weight(1f))
+        BottomMusicPlayer()
+        Spacer(modifier = Modifier.weight(1f))
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowLeft,
             label = "もどる",
-            backgroundColor = Color(0xFF26A69A)
+            backgroundColor = Teal200
         )
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowRight,
             label = "つぎへ",
-            backgroundColor = Color(0xFFFF7043)
+            backgroundColor = Purple500
         )
+    }
+}
+
+//  音楽プレイヤー
+@Composable
+fun BottomMusicPlayer() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth(0.5f)
+    ) {
+        Icon(
+            imageVector = Icons.Default.PlayArrow,
+            contentDescription = "再生",
+            tint = Purple500,
+            modifier = Modifier
+                .size(60.dp)
+                .clickable { }
+        )
+        Slider(
+            value = 0.8F, onValueChange = {})
     }
 }
 
@@ -137,7 +160,7 @@ fun MainContent() {
             // 曲の再生ボタン
             Button(
                 onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(Color(0xFFFF7043))
+                colors = ButtonDefaults.buttonColors(Teal200)
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(
@@ -171,7 +194,7 @@ fun MainContent() {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
-                            .background(Color.Blue),
+                            .background(Purple200),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -242,7 +265,7 @@ fun MainContent() {
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.width(10.dp))
-                        androidx.compose.material.Icon(
+                        Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "えらぶ"
                         )
@@ -260,7 +283,7 @@ fun MainContent() {
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.width(10.dp))
-                        androidx.compose.material.Icon(
+                        Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = "けす"
                         )
@@ -282,6 +305,7 @@ fun MainContent() {
                     Box(
                         modifier = Modifier
                             .size(100.dp)
+                            .aspectRatio(1f)
                             .background(Color.LightGray)
                             .clickable { }
                     )
