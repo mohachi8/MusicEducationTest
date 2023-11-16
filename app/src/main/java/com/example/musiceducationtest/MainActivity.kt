@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Scaffold(
-                        topBar = { TopBar() },
+                        topBar = { TopBar(text = "ブロックを ならびかえて もとの曲を さいげん しましょう。") },
                         bottomBar = { BottomNavigationBar() }
                     ) { innerPadding ->
                         Box(modifier = Modifier.padding(innerPadding)) {

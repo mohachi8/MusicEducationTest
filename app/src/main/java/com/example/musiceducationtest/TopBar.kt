@@ -11,7 +11,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TopBar() {
+fun TopBar(
+    text: String
+) {
     Row(
         modifier = Modifier
             .background(Color(0xFFEEEEEE))
@@ -20,7 +22,7 @@ fun TopBar() {
     ) {
         Spacer(modifier = Modifier.width(20.dp))
         Text(
-            text = "ブロックを ならびかえて もとの曲を さいげん しましょう。",
+            text = text,
             fontSize = 20.sp,
             fontWeight = FontWeight.ExtraBold,
         )
