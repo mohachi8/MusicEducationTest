@@ -34,7 +34,7 @@ fun BottomNavigationBar() {
             backgroundColor = Color(0xFF424242)
         )
         Spacer(modifier = Modifier.weight(1f))
-        BottomMusicPlayer()
+        BottomMusicPlayer(viewModel = MusicPlayerViewModel())
         Spacer(modifier = Modifier.weight(1f))
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowLeft,

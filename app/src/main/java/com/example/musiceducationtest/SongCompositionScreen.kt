@@ -199,8 +199,6 @@ fun BlockArea() {
         verticalArrangement = Arrangement.spacedBy(30.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
-            //.background(Color.White)
-            //.padding(20.dp)
             .fillMaxWidth()
     ) {
         items(20) { index ->
