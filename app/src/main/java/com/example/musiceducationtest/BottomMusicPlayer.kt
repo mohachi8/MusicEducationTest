@@ -56,9 +56,7 @@ fun BottomMusicPlayer(viewModel: MusicPlayerViewModel) {
             // スライダーの値が変化した時に呼び出される
             onValueChange = viewModel::onSliderValueChanged,
             // スライダーの操作が完了した時に呼び出される
-            onValueChangeFinished = {
-                viewModel.onSliderValueChangeFinished(playbackPosition)
-            }
+            onValueChangeFinished = viewModel::onSliderValueChangeFinished
         )
     }
 }

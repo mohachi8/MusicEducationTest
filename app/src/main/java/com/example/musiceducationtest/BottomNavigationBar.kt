@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,9 +25,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun BottomNavigationBar() {
 
-    // Composable関数内でContextを取得
-    val context = LocalContext.current
-    val musicPlayerViewModel = viewModel { MusicPlayerViewModel(context) }
+    // Composable関数内でViewModelを取得
+    val musicPlayerViewModel = viewModel<MusicPlayerViewModel>()
 
     Row(
         modifier = Modifier.background(Color(0xFFEEEEEE)),
