@@ -1,4 +1,4 @@
 package com.example.musiceducationtest
 
-class MusicPlayerModel {
+class MusicPlayerModel(val trackResourceId: Int) {
 }

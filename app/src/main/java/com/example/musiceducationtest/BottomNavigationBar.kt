@@ -14,33 +14,49 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.ui.theme.Teal200
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 // ボトムナビゲーションバー
 @Composable
 fun BottomNavigationBar() {
+
+    // Composable関数内でContextを取得
+    val context = LocalContext.current
+    val musicPlayerViewModel = viewModel { MusicPlayerViewModel(context) }
+
     Row(
         modifier = Modifier.background(Color(0xFFEEEEEE)),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
+        // やめるボタン
         BottomNavigateButton(
             imageVector = Icons.Default.Clear,
             label = "やめる",
             backgroundColor = Color(0xFF424242)
         )
+
         Spacer(modifier = Modifier.weight(1f))
-        BottomMusicPlayer(viewModel = MusicPlayerViewModel())
+
+        // 音楽プレイヤー
+        BottomMusicPlayer(viewModel = musicPlayerViewModel)
+
         Spacer(modifier = Modifier.weight(1f))
+
+        // もどるボタン
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowLeft,
             label = "もどる",
             backgroundColor = Teal200
         )
+
+        // つぎへボタン
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowRight,
             label = "つぎへ",
