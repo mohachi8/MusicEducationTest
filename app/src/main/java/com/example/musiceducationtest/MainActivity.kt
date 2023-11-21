@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
                         bottomBar = { BottomNavigationBar() }
                     ) { innerPadding ->
                         Box(modifier = Modifier.padding(innerPadding)) {
-                            SongCompositionScreen()
+                            QuestionSelectionScreen()
+                            //SongCompositionScreen()
                         }
                     }
                 }
