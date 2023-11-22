@@ -40,15 +40,15 @@ class MainActivity : ComponentActivity() {
                             Modifier.padding(innerPadding)
                         ) {
                             composable("questionSelection") { QuestionSelectionScreen(navController) }
-                            composable("explanation/{problemId}") { backStackEntry ->
-                                val problemId = backStackEntry.arguments?.getString("problemId")
-                                    ?: "defaultProblemId"
-                                ExplanationScreen(problemId, navController)
+                            composable("explanation/{lessonId}") { backStackEntry ->
+                                val lessonId = backStackEntry.arguments?.getString("lessonId")
+                                    ?: "defaultLessonId"
+                                ExplanationScreen(lessonId, navController)
                             }
-                            composable("songComposition/{problemId}") { backStackEntry ->
-                                val problemId = backStackEntry.arguments?.getString("problemId")
-                                    ?: "defaultProblemId"
-                                SongCompositionScreen(problemId, navController)
+                            composable("songComposition/{lessonId}") { backStackEntry ->
+                                val lessonId = backStackEntry.arguments?.getString("lessonId")
+                                    ?: "defaultLessonId"
+                                SongCompositionScreen(lessonId, navController)
                             }
                         }
                     }

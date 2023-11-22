@@ -27,7 +27,7 @@ import com.example.musiceducationtest.ui.theme.Purple200
 import com.example.musiceducationtest.ui.theme.Teal200
 
 @Composable
-fun SongCompositionScreen(problemId: String, navController: NavController) {
+fun SongCompositionScreen(lessonId: String, navController: NavController) {
     Column(modifier = Modifier.padding(20.dp)) {
         // フローチャート表示エリア
         Row(

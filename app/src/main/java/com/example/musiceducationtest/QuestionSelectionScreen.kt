@@ -15,17 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.theme.Purple200
 
 @Composable
 fun QuestionSelectionScreen(navController: NavController) {
 
-    val lessons = listOf(
-        Lesson("レッスン1", "きらきら星"),
-        Lesson("レッスン2", "うみはひろいな"),
-        Lesson("レッスン3", "かっこう")
-    )
+    val viewModel: LessonViewModel = viewModel()
+    val lessons = viewModel.allLessons
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(300.dp),
@@ -36,7 +34,7 @@ fun QuestionSelectionScreen(navController: NavController) {
         items(lessons) { lesson ->
             LessonBox(
                 lesson = lesson,
-                lessonId = lessons.indexOf(lesson),
+                viewModel = viewModel,
                 navController = navController
             )
         }
@@ -44,14 +42,17 @@ fun QuestionSelectionScreen(navController: NavController) {
 }
 
 @Composable
-fun LessonBox(lesson: Lesson, lessonId: Int, navController: NavController) {
+fun LessonBox(lesson: Lesson, viewModel: LessonViewModel, navController: NavController) {
     Box(
         modifier = Modifier
             .padding(8.dp)
             .width(300.dp)
             .aspectRatio(1f)
             .background(Purple200)
-            .clickable { navController.navigate("explanation/$lessonId") }
+            .clickable {
+                viewModel.selectLesson(lesson.id)
+                navController.navigate("explanation/${lesson.id}") // レッスンを選択した時、レッスンのIDをナビゲーションの引数として渡す
+            }
             .border(width = 8.dp, color = Color.Black),
         contentAlignment = Alignment.Center,
     ) {
@@ -67,13 +68,10 @@ fun LessonBox(lesson: Lesson, lessonId: Int, navController: NavController) {
             )
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = lesson.description,
+                text = lesson.songTitle,
                 fontSize = 16.sp,
                 color = Color.White
             )
         }
     }
 }
-
-// レッスンのデータクラス
-data class Lesson(val title: String, val description: String)
