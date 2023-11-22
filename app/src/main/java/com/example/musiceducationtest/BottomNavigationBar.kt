@@ -3,13 +3,15 @@ package com.example.musiceducationtest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +28,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 // ボトムナビゲーションバー
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    //val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    var showDialog: Boolean by remember { mutableStateOf(false) }
+
 
     // Composable関数内でViewModelを取得
     val musicPlayerViewModel = viewModel<MusicPlayerViewModel>()
@@ -41,7 +45,7 @@ fun BottomNavigationBar(navController: NavController) {
             imageVector = Icons.Default.Clear,
             label = "やめる",
             backgroundColor = Color(0xFF424242),
-            onClick = { navController.navigate("questionSelection") }
+            onClick = { showDialog = true }
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -65,6 +69,44 @@ fun BottomNavigationBar(navController: NavController) {
             label = "つぎへ",
             backgroundColor = Purple500,
             onClick = {}
+        )
+    }
+
+    // ダイアログの表示
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = {
+                Text(
+                    text = "本当に終了しますか？",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "学習内容は保存されません。",
+                    fontSize = 16.sp,
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        // 終了処理
+                        showDialog = false
+                        navController.navigate("questionSelection")
+                    }
+                ) {
+                    Text("終了")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showDialog = false }
+                ) {
+                    Text("キャンセル")
+                }
+            }
         )
     }
 }
