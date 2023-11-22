@@ -28,7 +28,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 // ボトムナビゲーションバー
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    //val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     var showDialog: Boolean by remember { mutableStateOf(false) }
 
 
@@ -45,6 +45,7 @@ fun BottomNavigationBar(navController: NavController) {
             imageVector = Icons.Default.Clear,
             label = "やめる",
             backgroundColor = Color(0xFF424242),
+            enabled = true,
             onClick = { showDialog = true }
         )
 
@@ -60,7 +61,8 @@ fun BottomNavigationBar(navController: NavController) {
             imageVector = Icons.Default.KeyboardArrowLeft,
             label = "もどる",
             backgroundColor = Teal200,
-            onClick = {}
+            enabled = currentRoute == "songComposition/{lessonId}",
+            onClick = { navController.navigateUp() }
         )
 
         // つぎへボタン
@@ -68,7 +70,11 @@ fun BottomNavigationBar(navController: NavController) {
             imageVector = Icons.Default.KeyboardArrowRight,
             label = "つぎへ",
             backgroundColor = Purple500,
-            onClick = {}
+            enabled = currentRoute == "explanation/{lessonId}",
+            onClick = {
+                val lessonId = navController.currentBackStackEntry?.arguments?.getString("lessonId")
+                navController.navigate("songComposition/$lessonId")
+            }
         )
     }
 
@@ -117,13 +123,14 @@ fun BottomNavigateButton(
     imageVector: ImageVector,
     label: String,
     backgroundColor: Color,
+    enabled: Boolean, // ボタンが有効かどうか
     onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .size(100.dp)
-            .background(backgroundColor)
-            .clickable(onClick = onClick),
+            .background(if (enabled) backgroundColor else Color.Gray)
+            .clickable(enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -132,12 +139,12 @@ fun BottomNavigateButton(
             Icon(
                 imageVector = imageVector,
                 contentDescription = "",
-                tint = Color.White,
+                tint = if (enabled) Color.White else Color.LightGray,
                 modifier = Modifier.size(60.dp)
             )
             Text(
                 text = label,
-                color = Color.White,
+                color = if (enabled) Color.White else Color.LightGray,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
