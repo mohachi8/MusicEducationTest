@@ -22,11 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.theme.Purple200
 import com.example.musiceducationtest.ui.theme.Teal200
 
 @Composable
-fun SongCompositionScreen() {
+fun SongCompositionScreen(problemId: String, navController: NavController) {
     Column(modifier = Modifier.padding(20.dp)) {
         // フローチャート表示エリア
         Row(

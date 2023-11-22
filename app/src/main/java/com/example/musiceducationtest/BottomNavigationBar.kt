@@ -20,10 +20,13 @@ import androidx.compose.ui.unit.sp
 import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.ui.theme.Teal200
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 // ボトムナビゲーションバー
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(navController: NavController) {
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     // Composable関数内でViewModelを取得
     val musicPlayerViewModel = viewModel<MusicPlayerViewModel>()
@@ -37,7 +40,8 @@ fun BottomNavigationBar() {
         BottomNavigateButton(
             imageVector = Icons.Default.Clear,
             label = "やめる",
-            backgroundColor = Color(0xFF424242)
+            backgroundColor = Color(0xFF424242),
+            onClick = { navController.navigate("questionSelection") }
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -51,14 +55,16 @@ fun BottomNavigationBar() {
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowLeft,
             label = "もどる",
-            backgroundColor = Teal200
+            backgroundColor = Teal200,
+            onClick = {}
         )
 
         // つぎへボタン
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowRight,
             label = "つぎへ",
-            backgroundColor = Purple500
+            backgroundColor = Purple500,
+            onClick = {}
         )
     }
 }
@@ -68,13 +74,14 @@ fun BottomNavigationBar() {
 fun BottomNavigateButton(
     imageVector: ImageVector,
     label: String,
-    backgroundColor: Color
+    backgroundColor: Color,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .size(100.dp)
             .background(backgroundColor)
-            .clickable { /* クリックされた時の処理*/ },
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Column(
