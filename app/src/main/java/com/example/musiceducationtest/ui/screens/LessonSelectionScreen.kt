@@ -19,12 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.musiceducationtest.model.LessonDataModel
 import com.example.musiceducationtest.ui.theme.Purple200
+import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 
 @Composable
-fun QuestionSelectionScreen(navController: NavController) {
+fun LessonSelectionScreen(navController: NavController) {
 
-    val viewModel: LessonViewModel = viewModel()
+    val viewModel: LessonManagerViewModel = viewModel()
     val lessons = viewModel.allLessons
 
 
@@ -50,8 +52,9 @@ fun QuestionSelectionScreen(navController: NavController) {
     }
 }
 
+// 選択肢のBox
 @Composable
-fun LessonBox(lesson: Lesson, viewModel: LessonViewModel, navController: NavController) {
+fun LessonBox(lesson: LessonDataModel, viewModel: LessonManagerViewModel, navController: NavController) {
     Box(
         modifier = Modifier
             .padding(8.dp)

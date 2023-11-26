@@ -1,4 +1,4 @@
-package com.example.musiceducationtest
+package com.example.musiceducationtest.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,11 +14,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 
 @Composable
 fun ExplanationScreen(lessonId: String, navController: NavController) {
     // ViewModel の取得
-    val viewModel: LessonViewModel = viewModel()
+    val viewModel: LessonManagerViewModel = viewModel()
 
     // ViewModel から選択されたレッスンの情報を取得
     val lesson by viewModel.selectedLesson.collectAsState()

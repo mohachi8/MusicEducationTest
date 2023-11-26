@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.musiceducationtest.ui.screens.ExplanationScreen
+import com.example.musiceducationtest.ui.screens.SongCompositionScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,18 +29,18 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         topBar = { TopBar(navController) }, // トップバー
                         bottomBar = { // ボトムバー
-                            if (currentRoute != "questionSelection") {
-                                BottomNavigationBar(navController)
+                            if (currentRoute != "lessonSelection") {
+                                BottomBar(navController)
                             }
                         }
                     ) { innerPadding -> // メインコンテンツ
                         NavHost( // ナビゲーションの管理
                             navController,
-                            startDestination = "questionSelection", // 最初に表示される画面
+                            startDestination = "lessonSelection", // 最初に表示される画面
                             Modifier.padding(innerPadding)
                         ) {
                             // 問題選択画面
-                            composable("questionSelection") { QuestionSelectionScreen(navController) }
+                            composable("lessonSelection") { LessonSelectionScreen(navController) }
                             // 問題説明画面。lessonIdによって表示される内容が切り替わる。
                             composable("explanation/{lessonId}") { backStackEntry ->
                                 val lessonId = backStackEntry.arguments?.getString("lessonId")

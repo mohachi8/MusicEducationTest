@@ -24,10 +24,11 @@ import com.example.musiceducationtest.ui.theme.Teal200
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 
-// ボトムナビゲーションバー
+// ボトムバー
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomBar(navController: NavController) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     var showDialog: Boolean by remember { mutableStateOf(false) }
 
@@ -100,7 +101,7 @@ fun BottomNavigationBar(navController: NavController) {
                     onClick = {
                         // 終了処理
                         showDialog = false
-                        navController.navigate("questionSelection")
+                        navController.navigate("lessonSelection")
                     }
                 ) {
                     Text("終了")

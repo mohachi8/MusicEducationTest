@@ -1,10 +1,11 @@
-package com.example.musiceducationtest
+package com.example.musiceducationtest.repository
 
 import android.app.Application
+import com.example.musiceducationtest.model.LessonDataModel
 
 class LessonRepository(val application: Application) {
     private val lessons = listOf(
-        Lesson(
+        LessonDataModel(
             id = "1",
             title = "レッスン1",
             songTitle = "きらきら星",
@@ -12,7 +13,7 @@ class LessonRepository(val application: Application) {
             musicFiles = "music1.mp3",
             answers = listOf("Answer1", "Answer2")
         ),
-        Lesson(
+        LessonDataModel(
             id = "2",
             title = "レッスン2",
             songTitle = "うみはひろいな",
@@ -23,11 +24,11 @@ class LessonRepository(val application: Application) {
         // 他のレッスンを追加...
     )
 
-    fun getLessonById(id: String): Lesson? {
+    fun getLessonById(id: String): LessonDataModel? {
         return lessons.find { it.id == id }
     }
 
-    fun getAllLessons(): List<Lesson> {
+    fun getAllLessons(): List<LessonDataModel> {
         return lessons
     }
 }
