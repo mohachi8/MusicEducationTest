@@ -1,4 +1,4 @@
-package com.example.musiceducationtest
+package com.example.musiceducationtest.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

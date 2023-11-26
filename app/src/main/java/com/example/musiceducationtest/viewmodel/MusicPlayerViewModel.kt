@@ -35,7 +35,32 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
 
 
     /* -------------------------- 処理 -------------------------- */
-    // 再生ボタンが押された時に再生と一時停止を入れ替えるメソッド
+    // MediaPlayerを再初期化するメソッド（このクラス内のみで使用）
+    private fun initializeMediaPlayer() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(getApplication(), R.raw.music).apply {
+                setOnCompletionListener {
+                    _isPlaying.value = false
+                }
+            }
+            startPlaybackPositionUpdater()
+        }
+    }
+
+    // 音楽を停止し、MediaPlayerを初期化するメソッド
+    fun stopMusic() {
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()  // 音楽の再生を停止
+                _isPlaying.value = false
+            }
+            it.release()  // MediaPlayerのリソースを解放
+        }
+        mediaPlayer = null  // MediaPlayerをnullに設定
+        initializeMediaPlayer() // MediaPlayerを初期化
+    }
+
+    // 再生ボタンが押された時のメソッド
     fun togglePlayPause() {
         mediaPlayer?.let {
             if (it.isPlaying) {

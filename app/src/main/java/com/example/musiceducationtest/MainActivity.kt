@@ -11,7 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.musiceducationtest.ui.components.BottomBar
 import com.example.musiceducationtest.ui.screens.ExplanationScreen
+import com.example.musiceducationtest.ui.screens.LessonSelectionScreen
 import com.example.musiceducationtest.ui.screens.SongCompositionScreen
 
 class MainActivity : ComponentActivity() {

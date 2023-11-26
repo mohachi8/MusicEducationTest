@@ -19,6 +19,7 @@ class LessonManagerViewModel(application: Application) : AndroidViewModel(applic
 
 
     /* -------------------------- 処理 -------------------------- */
+    // レッスンを選択
     fun selectLesson(lessonId: String) {
         _selectedLesson.value = lessonRepository.getLessonById(lessonId)
     }

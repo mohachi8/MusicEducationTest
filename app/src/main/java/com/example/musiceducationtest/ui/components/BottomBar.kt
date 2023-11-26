@@ -1,4 +1,4 @@
-package com.example.musiceducationtest
+package com.example.musiceducationtest.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +24,7 @@ import com.example.musiceducationtest.ui.theme.Teal200
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.musiceducationtest.BottomMusicPlayer
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 
 // ボトムバー
@@ -101,6 +102,7 @@ fun BottomBar(navController: NavController) {
                     onClick = {
                         // 終了処理
                         showDialog = false
+                        musicPlayerViewModel.stopMusic()
                         navController.navigate("lessonSelection")
                     }
                 ) {
