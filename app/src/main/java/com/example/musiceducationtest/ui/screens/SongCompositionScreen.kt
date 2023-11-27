@@ -20,9 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.musiceducationtest.ui.theme.Purple200
 import com.example.musiceducationtest.ui.theme.Teal200
 
@@ -43,7 +45,7 @@ fun SongCompositionScreen(lessonId: String, navController: NavController) {
             FlowChart()
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         // 選択肢エリア
         Column(
@@ -95,13 +97,15 @@ fun FlowChart() {
             .fillMaxWidth()
             .background((Color(0xFFEEEEEE)))
             .border(width = 4.dp, color = Color(0xFF424242))
-            .padding(20.dp),
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         item {
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .padding(5.dp)
+                    .width(110.dp)
+                    .aspectRatio(1f)
                     .background(Purple200),
                 contentAlignment = Alignment.Center
             ) {
@@ -112,32 +116,32 @@ fun FlowChart() {
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(modifier = Modifier.width(5.dp))
             Icon(
                 imageVector = Icons.Default.PlayArrow,
                 contentDescription = "次へ",
                 modifier = Modifier.size(40.dp)
             )
-            Spacer(modifier = Modifier.width(5.dp))
         }
         items(10) { index ->
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .padding(5.dp)
+                    .width(110.dp)
+                    .aspectRatio(1f)
                     .background(Color.LightGray)
             )
-            Spacer(modifier = Modifier.width(5.dp))
             Icon(
                 imageVector = Icons.Default.PlayArrow,
                 contentDescription = "次へ",
                 modifier = Modifier.size(40.dp)
             )
-            Spacer(modifier = Modifier.width(5.dp))
         }
         item {
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .padding(5.dp)
+                    .width(110.dp)
+                    .aspectRatio(1f)
                     .background(Color.LightGray)
             )
         }
@@ -196,20 +200,33 @@ fun ControlButtons() {
 @Composable
 fun BlockArea() {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 100.dp),
-        verticalArrangement = Arrangement.spacedBy(30.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        columns = GridCells.Adaptive(110.dp),
         modifier = Modifier
             .fillMaxWidth()
     ) {
         items(20) { index ->
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .padding(5.dp)
+                    .width(110.dp)
                     .aspectRatio(1f)
                     .background(Color.LightGray)
                     .clickable { }
             )
         }
     }
+}
+
+// プレビュー表示
+@Preview(showBackground = true, device = "spec:parent=pixel_c")
+@Composable
+fun PreviewSongCompositionScreen() {
+    // 仮のNavController
+    val navController = rememberNavController()
+
+    // プレビュー用のダミーのレッスンID。
+    val dummyLessonId = "lesson1"
+
+    // SongCompositionScreenコンポーザブルを呼び出し
+    SongCompositionScreen(lessonId = dummyLessonId, navController = navController)
 }
