@@ -1,9 +1,11 @@
 package com.example.musiceducationtest.repository
 
-import android.app.Application
 import com.example.musiceducationtest.model.LessonDataModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LessonRepository(val application: Application) {
+@Singleton
+class LessonRepository @Inject constructor() {
     private val lessons = listOf(
         LessonDataModel(
             id = "1",
