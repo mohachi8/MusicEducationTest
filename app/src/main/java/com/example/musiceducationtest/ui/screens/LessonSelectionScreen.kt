@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.components.LessonBox
@@ -17,9 +18,8 @@ import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 @Composable
 fun LessonSelectionScreen(navController: NavController) {
 
-    val viewModel: LessonManagerViewModel = viewModel()
+    val viewModel: LessonManagerViewModel = hiltViewModel()
     val lessons = viewModel.allLessons
-
 
     Column() {
         Spacer(modifier = Modifier.height(100.dp))

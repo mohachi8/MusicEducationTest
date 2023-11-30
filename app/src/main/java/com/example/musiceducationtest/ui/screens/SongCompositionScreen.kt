@@ -78,7 +78,7 @@ fun PreviewSongCompositionScreen() {
     // 仮のNavController
     val navController = rememberNavController()
 
-    // プレビュー用のダミーのレッスンID。
+    // プレビュー用のダミーのレッスンID
     val dummyLessonId = "lesson1"
 
     // SongCompositionScreenコンポーザブルを呼び出し

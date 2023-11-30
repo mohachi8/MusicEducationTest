@@ -18,7 +18,9 @@ import com.example.musiceducationtest.ui.screens.LessonSelectionScreen
 import com.example.musiceducationtest.ui.screens.SongCompositionScreen
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
