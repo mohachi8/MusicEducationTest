@@ -25,6 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.musiceducationtest.ui.components.BlockArea
+import com.example.musiceducationtest.ui.components.ControlButtons
+import com.example.musiceducationtest.ui.components.FlowChartMusicStartButton
+import com.example.musiceducationtest.ui.components.SongCompositionFlowChart
 import com.example.musiceducationtest.ui.theme.Purple200
 import com.example.musiceducationtest.ui.theme.Teal200
 
@@ -42,7 +46,7 @@ fun SongCompositionScreen(lessonId: String, navController: NavController) {
             Spacer(modifier = Modifier.width(20.dp))
 
             // フローチャート
-            FlowChart()
+            SongCompositionFlowChart()
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -66,156 +70,6 @@ fun SongCompositionScreen(lessonId: String, navController: NavController) {
     }
 }
 
-@Composable
-fun FlowChartMusicStartButton() {
-    Button(
-        onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(Teal200)
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = "再生",
-                modifier = Modifier.size(40.dp),
-                tint = Color.White
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-                text = "曲を再生",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-        }
-    }
-}
-
-@Composable
-fun FlowChart() {
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background((Color(0xFFEEEEEE)))
-            .border(width = 4.dp, color = Color(0xFF424242))
-            .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        item {
-            Box(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .width(110.dp)
-                    .aspectRatio(1f)
-                    .background(Purple200),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "スタート",
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = "次へ",
-                modifier = Modifier.size(40.dp)
-            )
-        }
-        items(10) { index ->
-            Box(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .width(110.dp)
-                    .aspectRatio(1f)
-                    .background(Color.LightGray)
-            )
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = "次へ",
-                modifier = Modifier.size(40.dp)
-            )
-        }
-        item {
-            Box(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .width(110.dp)
-                    .aspectRatio(1f)
-                    .background(Color.LightGray)
-            )
-        }
-    }
-}
-
-@Composable
-fun ControlButtons() {
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = "ブロック エリア",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.ExtraBold,
-        )
-        Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = { /*TODO*/ }) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(5.dp)
-            ) {
-                Text(
-                    text = "えらぶ",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "えらぶ"
-                )
-            }
-        }
-        Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = { /*TODO*/ }) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(5.dp)
-            ) {
-                Text(
-                    text = "けす",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "けす"
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun BlockArea() {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(110.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        items(20) { index ->
-            Box(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .width(110.dp)
-                    .aspectRatio(1f)
-                    .background(Color.LightGray)
-                    .clickable { }
-            )
-        }
-    }
-}
 
 // プレビュー表示
 @Preview(showBackground = true, device = "spec:parent=pixel_c")

@@ -29,6 +29,7 @@ fun ExplanationScreen(lessonId: String, navController: NavController) {
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
+        // それぞれのレッスンに対応した説明を表示
         Text(text = lesson?.description ?: "説明なし", fontSize = 20.sp)
 
         Spacer(modifier = Modifier.height(20.dp))

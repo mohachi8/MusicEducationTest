@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.musiceducationtest.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -48,7 +49,7 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     // 音楽を停止し、MediaPlayerを初期化するメソッド
-    fun stopMusic() {
+    private fun stopMusic() {
         mediaPlayer?.let {
             if (it.isPlaying) {
                 it.stop()  // 音楽の再生を停止
