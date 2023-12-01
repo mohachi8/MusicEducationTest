@@ -16,8 +16,6 @@ import com.example.musiceducationtest.ui.components.TopBar
 import com.example.musiceducationtest.ui.screens.ExplanationScreen
 import com.example.musiceducationtest.ui.screens.LessonSelectionScreen
 import com.example.musiceducationtest.ui.screens.SongCompositionScreen
-import com.example.musiceducationtest.viewmodel.BottomBarViewModel
-import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,11 +34,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         topBar = { TopBar(navController) }, // トップバー
                         bottomBar = { // ボトムバー
-                            BottomBar(
-                                navController = navController,
-                                bottomBarViewModel = BottomBarViewModel(),
-                                musicPlayerViewModel = MusicPlayerViewModel(application)
-                            )
+                            BottomBar(navController = navController)
                             /*
                             if (currentRoute != "lessonSelection") {
                                 BottomBar(navController)

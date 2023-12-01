@@ -10,22 +10,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.ui.theme.Teal200
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
+import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 
 // ボトムバー
 @Composable
-fun BottomBar(
-    navController: NavController,
-    bottomBarViewModel: BottomBarViewModel,
-    musicPlayerViewModel: MusicPlayerViewModel
-) {
+fun BottomBar(navController: NavController) {
+    val bottomBarViewModel: BottomBarViewModel = viewModel()
+    val musicPlayerViewModel: MusicPlayerViewModel = viewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val showDialog by bottomBarViewModel.showDialog.collectAsState()
+
+    musicPlayerViewModel.initializeMediaPlayer()
 
     Row(
         modifier = Modifier.background(Color(0xFFEEEEEE)),
@@ -38,7 +41,10 @@ fun BottomBar(
             label = "やめる",
             backgroundColor = Color(0xFF424242),
             enabled = true,
-            onClick = { bottomBarViewModel.toggleDialog(true) } // 終了確認のダイアログを表示
+            onClick = {
+                bottomBarViewModel.toggleDialog(true) // 終了確認のダイアログを表示
+                musicPlayerViewModel.releaseMediaPlayer()
+            }
         )
 
         // 空間を埋める
@@ -56,7 +62,10 @@ fun BottomBar(
             label = "もどる",
             backgroundColor = Teal200,
             enabled = currentRoute == "songComposition/{lessonId}",
-            onClick = { navController.navigateUp() }
+            onClick = {
+                navController.navigateUp()
+                musicPlayerViewModel.releaseMediaPlayer()
+            }
         )
 
         // つぎへボタン
@@ -68,6 +77,7 @@ fun BottomBar(
             onClick = {
                 val lessonId = navController.currentBackStackEntry?.arguments?.getString("lessonId")
                 navController.navigate("songComposition/$lessonId")
+                musicPlayerViewModel.releaseMediaPlayer()
             }
         )
     }

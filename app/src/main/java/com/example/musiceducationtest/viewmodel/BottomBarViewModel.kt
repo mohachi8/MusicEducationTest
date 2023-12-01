@@ -17,9 +17,4 @@ class BottomBarViewModel : ViewModel() {
     fun toggleDialog(show: Boolean) {
         _showDialog.value = show
     }
-
-    fun navigateHome(navController: NavController) {
-        navController.navigate("lessonSelection")
-        _showDialog.value = false
-    }
 }

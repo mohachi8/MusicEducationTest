@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class MusicPlayerViewModel(application: Application) : AndroidViewModel(application) {
 
     /* -------------------------- 変数の定義 -------------------------- */
-    private var mediaPlayer: MediaPlayer? = MediaPlayer.create(application, R.raw.music)
+    private var mediaPlayer: MediaPlayer? = null
     private val _isPlaying = MutableStateFlow(false) // 再生状態のフラグ（このクラス内のみで使用）
     private val _playbackPosition = MutableStateFlow(0f) // スライダーの位置（このクラス内のみで使用）
     private val _isSliderBeingTouched = MutableStateFlow(false) // スライダーが操作されている時のフラグ
@@ -24,20 +24,25 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
     val isPlaying: StateFlow<Boolean> = _isPlaying // 再生状態のフラグ
     val playbackPosition: StateFlow<Float> = _playbackPosition // スライダーの位置
 
-
-    /* -------------------------- 初期化 -------------------------- */
-    init {
-        // 再生が完了したら再生停止状態に変更する
-        mediaPlayer?.setOnCompletionListener {
-            _isPlaying.value = false
+    /* -------------------------- 処理 -------------------------- */
+    // スライダーの位置を更新するメソッド
+    private fun startPlaybackPositionUpdater() {
+        viewModelScope.launch {
+            while (isActive) {
+                if (!_isSliderBeingTouched.value) {
+                    mediaPlayer?.let { player ->
+                        val currentPosition = player.currentPosition.toFloat()
+                        val totalDuration = player.duration.toFloat()
+                        _playbackPosition.value = currentPosition / totalDuration
+                    }
+                }
+                delay(500) // 更新間隔を 0.5 秒に設定
+            }
         }
-        startPlaybackPositionUpdater()
     }
 
-
-    /* -------------------------- 処理 -------------------------- */
-    // MediaPlayerを再初期化するメソッド（このクラス内のみで使用）
-    private fun initializeMediaPlayer() {
+    // MediaPlayerを初期化するメソッド
+    fun initializeMediaPlayer() {
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(getApplication(), R.raw.music).apply {
                 setOnCompletionListener {
@@ -46,19 +51,6 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
             }
             startPlaybackPositionUpdater()
         }
-    }
-
-    // 音楽を停止し、MediaPlayerを初期化するメソッド
-    private fun stopMusic() {
-        mediaPlayer?.let {
-            if (it.isPlaying) {
-                it.stop()  // 音楽の再生を停止
-                _isPlaying.value = false
-            }
-            it.release()  // MediaPlayerのリソースを解放
-        }
-        mediaPlayer = null  // MediaPlayerをnullに設定
-        initializeMediaPlayer() // MediaPlayerを初期化
     }
 
     // 再生ボタンが押された時のメソッド
@@ -74,20 +66,16 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    // スライダーの位置を更新するメソッド
-    private fun startPlaybackPositionUpdater() {
-        viewModelScope.launch {
-            while (isActive) {
-                if (!_isSliderBeingTouched.value) {
-                    mediaPlayer?.let { player ->
-                        val currentPosition = player.currentPosition.toFloat()
-                        val totalDuration = player.duration.toFloat()
-                        _playbackPosition.value = currentPosition / totalDuration
-                    }
-                }
-                delay(500) // 更新間隔を 0.5 秒に設定
+    // 音楽を停止し、MediaPlayerのリソースを解放するメソッド
+    fun releaseMediaPlayer() {
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()  // 音楽の再生を停止
+                _isPlaying.value = false
             }
+            it.release()  // MediaPlayerのリソースを解放
         }
+        mediaPlayer = null  // MediaPlayerをnullに設定
     }
 
     // スライダーの値が変化した時に呼び出されるメソッド

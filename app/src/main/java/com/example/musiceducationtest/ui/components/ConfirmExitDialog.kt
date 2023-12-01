@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
+import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 
 @Composable
 fun ConfirmExitDialog(
@@ -36,7 +37,8 @@ fun ConfirmExitDialog(
             TextButton(
                 onClick = {
                     // 終了の処理
-                    bottomBarViewModel.navigateHome(navController)
+                    navController.navigate("lessonSelection")
+                    bottomBarViewModel.toggleDialog(false)
                 }
             ) {
                 Text("終了")

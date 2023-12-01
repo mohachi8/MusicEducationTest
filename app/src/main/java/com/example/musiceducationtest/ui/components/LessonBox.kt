@@ -28,21 +28,22 @@ import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 @Composable
 fun LessonBox(
     lesson: LessonDataModel,
-    viewModel: LessonManagerViewModel,
-    navController: NavController
+    lessonViewModel: LessonManagerViewModel,
+    navController: NavController,
 ) {
     Box(
         modifier = Modifier
             .padding(8.dp)
-            .width(300.dp)
+            .width(250.dp)
             .aspectRatio(1f)
             .background(Purple200)
             .clickable {
-                viewModel.selectLesson(lesson.id)
+                // 選択肢したレッスンをViewModelで保持
+                lessonViewModel.selectLesson(lesson.id)
                 // レッスンを選択した時、レッスンのIDをナビゲーションの引数として渡し、画面遷移
                 navController.navigate("explanation/${lesson.id}")
             }
-            .border(width = 8.dp, color = Color.Black),
+            .border(width = 6.dp, color = Color.Black),
         contentAlignment = Alignment.Center,
     ) {
         Column(

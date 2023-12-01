@@ -15,14 +15,13 @@ import javax.inject.Inject
 class LessonManagerViewModel @Inject constructor(
     private val lessonRepository: LessonRepository
 ) : ViewModel() {
-
     /* -------------------------- 変数の定義 -------------------------- */
-    //private val lessonRepository = LessonRepository(application) // この部分はレポジトリの実装に依存します
     private val _selectedLesson = MutableStateFlow<LessonDataModel?>(null)
 
+    // 選択されたレッスンを保持する変数
     val selectedLesson: StateFlow<LessonDataModel?> = _selectedLesson
+    // 全種類のレッスン（問題選択画面で使用）
     val allLessons = lessonRepository.getAllLessons()
-
 
     /* -------------------------- 処理 -------------------------- */
     // レッスンを選択

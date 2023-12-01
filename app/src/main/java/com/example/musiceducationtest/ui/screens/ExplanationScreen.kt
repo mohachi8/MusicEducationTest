@@ -13,20 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 
 @Composable
 fun ExplanationScreen(lessonId: String, navController: NavController) {
-    // ViewModel の取得
-    val viewModel: LessonManagerViewModel = hiltViewModel()
-
-    // ViewModel から選択されたレッスンの情報を取得
-    val lesson by viewModel.selectedLesson.collectAsState()
+    val lessonViewModel: LessonManagerViewModel = hiltViewModel()
+    val lesson by lessonViewModel.selectedLesson.collectAsState()
 
     LaunchedEffect(lessonId) {
-        viewModel.selectLesson(lessonId)
+        lessonViewModel.selectLesson(lessonId)
     }
 
     Column(modifier = Modifier.padding(16.dp)) {

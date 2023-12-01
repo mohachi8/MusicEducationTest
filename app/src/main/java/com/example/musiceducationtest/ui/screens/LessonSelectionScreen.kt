@@ -10,22 +10,21 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.components.LessonBox
 import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 
 @Composable
 fun LessonSelectionScreen(navController: NavController) {
-
-    val viewModel: LessonManagerViewModel = hiltViewModel()
-    val lessons = viewModel.allLessons
+    val lessonViewModel: LessonManagerViewModel = hiltViewModel()
+    // 全てのレッスンを取得
+    val lessons = lessonViewModel.allLessons
 
     Column() {
         Spacer(modifier = Modifier.height(100.dp))
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(300.dp),
-            contentPadding = PaddingValues(16.dp),
+            columns = GridCells.Adaptive(250.dp),
+            contentPadding = PaddingValues(20.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = with(LocalDensity.current) {
@@ -36,7 +35,7 @@ fun LessonSelectionScreen(navController: NavController) {
             items(lessons) { lesson ->
                 LessonBox(
                     lesson = lesson,
-                    viewModel = viewModel,
+                    lessonViewModel = lessonViewModel,
                     navController = navController
                 )
             }

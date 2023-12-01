@@ -16,14 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 
 // 音楽プレイヤーのGUI
 @Composable
 fun BottomMusicPlayer(viewModel: MusicPlayerViewModel) {
-
-    // collectAsStateでviewModelの状態を反映
     val isPlaying = viewModel.isPlaying.collectAsState().value
     val playbackPosition = viewModel.playbackPosition.collectAsState().value
 

@@ -23,7 +23,7 @@ fun BottomNavigateButton(
     label: String,
     backgroundColor: Color,
     enabled: Boolean, // ボタンが有効かどうか（ボタンが無効だと灰色表示になり、押せなくなる）
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
