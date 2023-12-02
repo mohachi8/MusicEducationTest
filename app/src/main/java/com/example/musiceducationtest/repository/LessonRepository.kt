@@ -12,7 +12,7 @@ class LessonRepository @Inject constructor() {
             title = "レッスン1",
             songTitle = "きらきら星",
             description = "このレッスンでは「きらきら星」を題材にした学習を行います。",
-            musicFiles = "music1.mp3",
+            musicFiles = "twinkle_twinkle_little_star.mp3",
             answers = listOf("Answer1", "Answer2")
         ),
         LessonDataModel(
