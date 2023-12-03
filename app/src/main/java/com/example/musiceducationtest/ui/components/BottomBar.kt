@@ -3,6 +3,7 @@ package com.example.musiceducationtest.ui.components
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -11,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musiceducationtest.ui.theme.Purple500
@@ -63,7 +65,15 @@ fun BottomBar(
         )
 
         // 空間を埋める
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(0.5f))
+
+        Text(
+            text = selectedLesson?.songTitle ?: "エラー",
+            color = Purple500,
+            )
+
+        // 空間を埋める
+        Spacer(modifier = Modifier.weight(0.2f))
 
         // 音楽プレイヤー
         MusicPlayer(viewModel = musicPlayerViewModel)
