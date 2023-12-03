@@ -18,18 +18,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musiceducationtest.ui.theme.Purple200
 
+@Preview
 @Composable
 fun SongCompositionFlowChart() {
     LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background((Color(0xFFEEEEEE)))
-            .border(width = 4.dp, color = Color(0xFF424242))
-            .padding(10.dp),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         item {

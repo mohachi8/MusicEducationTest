@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.example.musiceducationtest.repository.LessonRepository
 import com.example.musiceducationtest.ui.components.BlockArea
 import com.example.musiceducationtest.ui.components.ControlButtons
@@ -19,19 +18,33 @@ import com.example.musiceducationtest.viewmodel.LessonViewModel
 
 @Composable
 fun SongCompositionScreen(lessonViewModel: LessonViewModel) {
-    Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
 
         Spacer(modifier = Modifier.weight(1f))
 
         // フローチャート表示エリア
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background((Color(0xFFEEEEEE)))
+                .border(width = 2.dp, color = Color(0xFF424242))
+                .padding(10.dp)
         ) {
 
             // 「曲を再生」ボタン
             FlowChartMusicStartButton()
 
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+
+            // 縦区切りの線
+            Box(
+                modifier = Modifier
+                    .height(120.dp)
+                    .width(1.dp)
+                    .background(Color(0xFF424242))
+            )
+            Spacer(modifier = Modifier.width(10.dp))
 
             // フローチャート
             SongCompositionFlowChart()
@@ -44,7 +57,7 @@ fun SongCompositionScreen(lessonViewModel: LessonViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background((Color(0xFFEEEEEE)))
-                .border(width = 4.dp, color = Color(0xFF424242))
+                .border(width = 2.dp, color = Color(0xFF424242))
                 .padding(20.dp),
         ) {
             // 選択肢操作ボタンエリア
@@ -71,6 +84,7 @@ fun PreviewSongCompositionScreen() {
     // SongCompositionScreenのプレビュー
     SongCompositionScreen(lessonViewModel = dummyLessonViewModel)
 }
+
 fun createDummyLessonViewModel(): LessonViewModel {
     return LessonViewModel(lessonRepository = LessonRepository())
 }

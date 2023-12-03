@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BlockArea() {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(110.dp),
+        columns = GridCells.Adaptive(120.dp),
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        items(20) { index ->
+        items(20) {
             Box(
                 modifier = Modifier
                     .padding(5.dp)
