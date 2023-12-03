@@ -34,7 +34,10 @@ import com.example.musiceducationtest.ui.theme.Teal200
 
 @Composable
 fun SongCompositionScreen(lessonId: String, navController: NavController) {
-    Column(modifier = Modifier.padding(20.dp)) {
+    Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+
+        Spacer(modifier = Modifier.weight(1f))
+
         // フローチャート表示エリア
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -49,7 +52,7 @@ fun SongCompositionScreen(lessonId: String, navController: NavController) {
             SongCompositionFlowChart()
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         // 選択肢エリア
         Column(
@@ -67,6 +70,8 @@ fun SongCompositionScreen(lessonId: String, navController: NavController) {
             // 選択肢エリア
             BlockArea()
         }
+
+        Spacer(modifier = Modifier.weight(1f))
     }
 }
 

@@ -10,14 +10,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.ui.theme.Teal200
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
-import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 
 // ボトムバー
@@ -68,10 +66,10 @@ fun BottomBar(navController: NavController) {
             }
         )
 
-        // つぎへボタン
+        // すすむボタン
         BottomNavigateButton(
             imageVector = Icons.Default.KeyboardArrowRight,
-            label = "つぎへ",
+            label = "すすむ",
             backgroundColor = Purple500,
             enabled = currentRoute == "explanation/{lessonId}",
             onClick = {
