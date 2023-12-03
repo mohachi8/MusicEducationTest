@@ -33,9 +33,9 @@ fun TopBar(navController: NavController) {
 
 fun getTitleForRoute(route: String?): String {
     return when (route) {
-        "lessonSelection" -> "レッスンを えらんで 学習を スタート"
-        "explanation/{lessonId}" -> "曲を きいてください。"
-        "songComposition/{lessonId}" -> "ブロックを ならびかえて もとの曲を さいげん しましょう。"
+        "lessonSelectionScreen" -> "レッスンを えらんで 学習を スタート"
+        "explanationScreen" -> "曲を きいてください。"
+        "songCompositionScreen" -> "ブロックを ならびかえて もとの曲を さいげん しましょう。"
         else -> "エラー"
     }
 }

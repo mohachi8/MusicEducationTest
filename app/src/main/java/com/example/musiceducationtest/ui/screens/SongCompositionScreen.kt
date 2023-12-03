@@ -2,38 +2,23 @@ package com.example.musiceducationtest.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.musiceducationtest.repository.LessonRepository
 import com.example.musiceducationtest.ui.components.BlockArea
 import com.example.musiceducationtest.ui.components.ControlButtons
 import com.example.musiceducationtest.ui.components.FlowChartMusicStartButton
 import com.example.musiceducationtest.ui.components.SongCompositionFlowChart
-import com.example.musiceducationtest.ui.theme.Purple200
-import com.example.musiceducationtest.ui.theme.Teal200
+import com.example.musiceducationtest.viewmodel.LessonViewModel
 
 @Composable
-fun SongCompositionScreen(lessonId: String, navController: NavController) {
+fun SongCompositionScreen(lessonViewModel: LessonViewModel) {
     Column(modifier = Modifier.padding(horizontal = 20.dp)) {
 
         Spacer(modifier = Modifier.weight(1f))
@@ -77,15 +62,15 @@ fun SongCompositionScreen(lessonId: String, navController: NavController) {
 
 
 // プレビュー表示
-@Preview(showBackground = true, device = "spec:parent=pixel_c")
+@Preview(showBackground = true, device = "id:pixel_c")
 @Composable
 fun PreviewSongCompositionScreen() {
-    // 仮のNavController
-    val navController = rememberNavController()
+    // ダミーデータまたはモックビューモデルを作成
+    val dummyLessonViewModel = createDummyLessonViewModel()
 
-    // プレビュー用のダミーのレッスンID
-    val dummyLessonId = "lesson1"
-
-    // SongCompositionScreenコンポーザブルを呼び出し
-    SongCompositionScreen(lessonId = dummyLessonId, navController = navController)
+    // SongCompositionScreenのプレビュー
+    SongCompositionScreen(lessonViewModel = dummyLessonViewModel)
+}
+fun createDummyLessonViewModel(): LessonViewModel {
+    return LessonViewModel(lessonRepository = LessonRepository())
 }

@@ -1,7 +1,5 @@
 package com.example.musiceducationtest.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.example.musiceducationtest.repository.LessonRepository
 import com.example.musiceducationtest.model.LessonDataModel
@@ -12,7 +10,7 @@ import javax.inject.Inject
 
 // レッスンデータの管理をするViewModel
 @HiltViewModel
-class LessonManagerViewModel @Inject constructor(
+class LessonViewModel @Inject constructor(
     private val lessonRepository: LessonRepository
 ) : ViewModel() {
     /* -------------------------- 変数の定義 -------------------------- */
@@ -20,11 +18,12 @@ class LessonManagerViewModel @Inject constructor(
 
     // 選択されたレッスンを保持する変数
     val selectedLesson: StateFlow<LessonDataModel?> = _selectedLesson
-    // 全種類のレッスン（問題選択画面で使用）
+
+    // 全種類のレッスンを保持する変数（問題選択画面で使用）
     val allLessons = lessonRepository.getAllLessons()
 
     /* -------------------------- 処理 -------------------------- */
-    // レッスンを選択
+    // レッスンを選択した時に呼び出されるメソッド
     fun selectLesson(lessonId: String) {
         _selectedLesson.value = lessonRepository.getLessonById(lessonId)
     }

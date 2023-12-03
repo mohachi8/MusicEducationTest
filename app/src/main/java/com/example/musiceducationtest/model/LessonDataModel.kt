@@ -5,6 +5,6 @@ data class LessonDataModel(
     val title: String, // レッスンタイトル
     val songTitle: String, // 曲の題名
     val description: String, // レッスンの説明
-    val musicFiles: String, // 曲のパス
+    val musicResId: Int, // 曲のリソースID（Int）
     val answers: List<String> // 問題の答え
 )

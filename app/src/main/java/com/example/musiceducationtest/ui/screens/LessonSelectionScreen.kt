@@ -9,16 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.components.LessonBox
-import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
+import com.example.musiceducationtest.viewmodel.LessonViewModel
 
 @Composable
-fun LessonSelectionScreen(navController: NavController) {
-    val lessonViewModel: LessonManagerViewModel = hiltViewModel()
-    // 全てのレッスンを取得
-    val lessons = lessonViewModel.allLessons
+fun LessonSelectionScreen(navController: NavController,lessonViewModel: LessonViewModel) {
+    val lessons = lessonViewModel.allLessons // 全てのレッスンを取得
 
     Column() {
         Spacer(modifier = Modifier.height(100.dp))

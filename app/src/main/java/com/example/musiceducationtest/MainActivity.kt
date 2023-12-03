@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musiceducationtest.ui.theme.MusicEducationTestTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +18,9 @@ import com.example.musiceducationtest.ui.components.TopBar
 import com.example.musiceducationtest.ui.screens.ExplanationScreen
 import com.example.musiceducationtest.ui.screens.LessonSelectionScreen
 import com.example.musiceducationtest.ui.screens.SongCompositionScreen
+import com.example.musiceducationtest.viewmodel.BottomBarViewModel
+import com.example.musiceducationtest.viewmodel.LessonViewModel
+import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +29,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent { // Jetpack Compose を使ってUIを記述
             MusicEducationTestTheme { // アプリケーションのテーマ
+                val lessonViewModel: LessonViewModel = hiltViewModel()
+                val bottomBarViewModel: BottomBarViewModel = hiltViewModel()
+                val musicPlayerViewModel: MusicPlayerViewModel = viewModel()
                 val navController = rememberNavController()
                 val currentRoute =
                     navController.currentBackStackEntryAsState().value?.destination?.route
@@ -34,32 +42,32 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         topBar = { TopBar(navController) }, // トップバー
                         bottomBar = { // ボトムバー
-                            BottomBar(navController = navController)
-                            /*
-                            if (currentRoute != "lessonSelection") {
-                                BottomBar(navController)
+                            if (currentRoute != "lessonSelectionScreen") { // 問題選択画面では非表示
+                                BottomBar(
+                                    navController,
+                                    lessonViewModel,
+                                    bottomBarViewModel,
+                                    musicPlayerViewModel
+                                )
                             }
-                             */
                         }
                     ) { innerPadding -> // メインコンテンツ
                         NavHost( // ナビゲーションの管理
                             navController,
-                            startDestination = "lessonSelection", // 最初に表示される画面
+                            startDestination = "lessonSelectionScreen", // 最初に表示される画面
                             Modifier.padding(innerPadding)
                         ) {
                             // 問題選択画面
-                            composable("lessonSelection") { LessonSelectionScreen(navController) }
-                            // 問題説明画面。lessonIdによって表示される内容が切り替わる。
-                            composable("explanation/{lessonId}") { backStackEntry ->
-                                val lessonId = backStackEntry.arguments?.getString("lessonId")
-                                    ?: "defaultLessonId" // デフォルト値
-                                ExplanationScreen(lessonId, navController)
+                            composable("lessonSelectionScreen") {
+                                LessonSelectionScreen(navController, lessonViewModel)
                             }
-                            // 学習画面。lessonIdによって表示される内容が切り替わる。
-                            composable("songComposition/{lessonId}") { backStackEntry ->
-                                val lessonId = backStackEntry.arguments?.getString("lessonId")
-                                    ?: "defaultLessonId" // デフォルト値
-                                SongCompositionScreen(lessonId, navController)
+                            // 問題説明画面
+                            composable("explanationScreen") {
+                                ExplanationScreen(lessonViewModel)
+                            }
+                            // 学習画面
+                            composable("songCompositionScreen") {
+                                SongCompositionScreen(lessonViewModel)
                             }
                         }
                     }

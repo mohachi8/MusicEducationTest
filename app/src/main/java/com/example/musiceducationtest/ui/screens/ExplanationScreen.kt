@@ -6,24 +6,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
+import com.example.musiceducationtest.viewmodel.LessonViewModel
 
 @Composable
-fun ExplanationScreen(lessonId: String, navController: NavController) {
-    val lessonViewModel: LessonManagerViewModel = hiltViewModel()
+fun ExplanationScreen(lessonViewModel: LessonViewModel) {
     val lesson by lessonViewModel.selectedLesson.collectAsState()
-
-    LaunchedEffect(lessonId) {
-        lessonViewModel.selectLesson(lessonId)
-    }
 
     Column(modifier = Modifier.padding(16.dp)) {
         // それぞれのレッスンに対応した説明を表示

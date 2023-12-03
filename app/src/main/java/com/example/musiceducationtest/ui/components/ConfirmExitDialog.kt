@@ -13,7 +13,8 @@ import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
 @Composable
 fun ConfirmExitDialog(
     navController: NavController,
-    bottomBarViewModel: BottomBarViewModel
+    bottomBarViewModel: BottomBarViewModel,
+    musicPlayerViewModel:MusicPlayerViewModel
 ) {
     AlertDialog(
         onDismissRequest = {
@@ -36,8 +37,10 @@ fun ConfirmExitDialog(
         confirmButton = {
             TextButton(
                 onClick = {
+                    // 音楽プレイヤーのリソースを解放
+                    musicPlayerViewModel.releaseMediaPlayer()
                     // 終了の処理
-                    navController.navigate("lessonSelection")
+                    navController.navigate("lessonSelectionScreen")
                     bottomBarViewModel.toggleDialog(false)
                 }
             ) {

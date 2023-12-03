@@ -40,10 +40,9 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    // MediaPlayerを初期化するメソッド
-    fun initializeMediaPlayer() {
+    fun initializeMediaPlayer(musicResId: Int) {
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(getApplication(), R.raw.twinkle_twinkle_little_star).apply {
+            mediaPlayer = MediaPlayer.create(getApplication(), musicResId).apply {
                 setOnCompletionListener {
                     _isPlaying.value = false
                 }

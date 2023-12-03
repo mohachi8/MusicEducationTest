@@ -22,13 +22,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.musiceducationtest.model.LessonDataModel
 import com.example.musiceducationtest.ui.theme.Purple200
-import com.example.musiceducationtest.viewmodel.LessonManagerViewModel
+import com.example.musiceducationtest.viewmodel.LessonViewModel
 
 // 選択肢のBox
 @Composable
 fun LessonBox(
     lesson: LessonDataModel,
-    lessonViewModel: LessonManagerViewModel,
+    lessonViewModel: LessonViewModel,
     navController: NavController,
 ) {
     Box(
@@ -38,10 +38,10 @@ fun LessonBox(
             .aspectRatio(1f)
             .background(Purple200)
             .clickable {
-                // 選択肢したレッスンをViewModelで保持
+                // 選択肢したレッスンをlessonViewModelで保持
                 lessonViewModel.selectLesson(lesson.id)
-                // レッスンを選択した時、レッスンのIDをナビゲーションの引数として渡し、画面遷移
-                navController.navigate("explanation/${lesson.id}")
+                // レッスン説明画面に遷移
+                navController.navigate("explanationScreen")
             }
             .border(width = 6.dp, color = Color.Black),
         contentAlignment = Alignment.Center,
