@@ -37,7 +37,7 @@ fun SongCompositionScreen(lessonViewModel: LessonViewModel) {
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            // 縦区切りの線
+            // 縦区切り線
             Box(
                 modifier = Modifier
                     .height(120.dp)

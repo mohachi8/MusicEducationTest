@@ -5,14 +5,20 @@ import android.media.MediaPlayer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musiceducationtest.R
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // 音楽プレイヤーに関する処理
-class MusicPlayerViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class MusicPlayerViewModel @Inject constructor(
+    application: Application
+) : AndroidViewModel(application) {
 
     /* -------------------------- 変数の定義 -------------------------- */
     private var mediaPlayer: MediaPlayer? = null
@@ -35,7 +41,7 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                         _playbackPosition.value = currentPosition / totalDuration
                     }
                 }
-                delay(500) // 更新間隔を 0.5 秒に設定
+                delay(100) // 更新間隔を 0.1 秒に設定
             }
         }
     }

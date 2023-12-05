@@ -1,6 +1,7 @@
 package com.example.musiceducationtest.repository
 
 import com.example.musiceducationtest.R
+import com.example.musiceducationtest.model.BlockDataModel
 import com.example.musiceducationtest.model.LessonDataModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,6 +15,10 @@ class LessonRepository @Inject constructor() {
             songTitle = "きらきら星",
             description = "このレッスンでは「きらきら星」を題材にした学習を行います。",
             musicResId = R.raw.twinkle_twinkle_little_star,
+            flowChartBlocks = listOf(
+                //BlockDataModel(id = "block1", imageResId = R.drawable.some_image, musicResId = R.raw.some_music_file),
+                //BlockDataModel(id = "block2", imageResId = R.drawable.some_image, musicResId = R.raw.some_music_file),
+            ),
             answers = listOf("Answer1", "Answer2")
         ),
         LessonDataModel(
@@ -22,6 +27,10 @@ class LessonRepository @Inject constructor() {
             songTitle = "うみはひろいな",
             description = "このレッスンでは「うみはひろいな」を題材にした学習を行います。",
             musicResId = R.raw.sea,
+            flowChartBlocks = listOf(
+                //BlockDataModel(id = "block1", imageResId = R.drawable.some_image, musicResId = R.raw.some_music_file),
+                //BlockDataModel(id = "block2", imageResId = R.drawable.some_image, musicResId = R.raw.some_music_file),
+            ),
             answers = listOf("Answer3", "Answer4")
         )
         // 他のレッスンを追加...

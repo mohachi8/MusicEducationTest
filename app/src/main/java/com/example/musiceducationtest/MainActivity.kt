@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
             MusicEducationTestTheme { // アプリケーションのテーマ
                 val lessonViewModel: LessonViewModel = hiltViewModel()
                 val bottomBarViewModel: BottomBarViewModel = hiltViewModel()
-                val musicPlayerViewModel: MusicPlayerViewModel = viewModel()
+                val musicPlayerViewModel: MusicPlayerViewModel = hiltViewModel()
                 val navController = rememberNavController()
                 val currentRoute =
                     navController.currentBackStackEntryAsState().value?.destination?.route
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Scaffold(
-                        topBar = { TopBar(navController) }, // トップバー
+                        topBar = { TopBar(navController, lessonViewModel) }, // トップバー
                         bottomBar = { // ボトムバー
                             if (currentRoute != "lessonSelectionScreen") { // 問題選択画面では非表示
                                 BottomBar(

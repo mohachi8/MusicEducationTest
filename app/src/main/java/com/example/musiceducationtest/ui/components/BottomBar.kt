@@ -3,18 +3,14 @@ package com.example.musiceducationtest.ui.components
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.ui.theme.Teal200
 import androidx.navigation.NavController
@@ -38,9 +34,11 @@ fun BottomBar(
 
     // レッスンの変更を検知して、音楽プレイヤーを初期化
     LaunchedEffect(selectedLesson) {
-        musicPlayerViewModel.initializeMediaPlayer(
-            musicResId = selectedLesson?.musicResId ?: R.raw.twinkle_twinkle_little_star
-        )
+        if (selectedLesson != null) {
+            musicPlayerViewModel.initializeMediaPlayer(
+                musicResId = selectedLesson?.musicResId ?: R.raw.twinkle_twinkle_little_star
+            )
+        }
     }
 
     // ダイアログの表示（やめるボタンを押した時の処理）
@@ -55,7 +53,7 @@ fun BottomBar(
 
         // やめるボタン
         BottomNavigateButton(
-            imageVector = Icons.Default.Clear,
+            imageVector = Icons.Default.Logout,
             label = "やめる",
             backgroundColor = Color(0xFF424242),
             enabled = true,
@@ -65,25 +63,17 @@ fun BottomBar(
         )
 
         // 空間を埋める
-        Spacer(modifier = Modifier.weight(0.5f))
-
-        Text(
-            text = selectedLesson?.songTitle ?: "エラー",
-            color = Purple500,
-            )
-
-        // 空間を埋める
-        Spacer(modifier = Modifier.weight(0.2f))
+        Spacer(modifier = Modifier.weight(1f))
 
         // 音楽プレイヤー
         MusicPlayer(viewModel = musicPlayerViewModel)
 
         // 空間を埋める
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(0.7f))
 
         // もどるボタン
         BottomNavigateButton(
-            imageVector = Icons.Default.KeyboardArrowLeft,
+            imageVector = Icons.Default.ArrowBackIosNew,
             label = "もどる",
             backgroundColor = Teal200,
             enabled = currentRoute == "songCompositionScreen",
@@ -94,7 +84,7 @@ fun BottomBar(
 
         // すすむボタン
         BottomNavigateButton(
-            imageVector = Icons.Default.KeyboardArrowRight,
+            imageVector = Icons.Default.ArrowForwardIos,
             label = "すすむ",
             backgroundColor = Purple500,
             enabled = currentRoute == "explanationScreen",

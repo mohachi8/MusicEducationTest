@@ -27,9 +27,8 @@ fun MusicPlayer(viewModel: MusicPlayerViewModel) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .requiredWidthIn(min = 300.dp)
-            .fillMaxWidth(0.5f)
-            .height(80.dp)
-            //.background(Color.LightGray)
+            .fillMaxWidth(0.4f)
+            .height(70.dp)
             .padding(start = 10.dp, end = 20.dp)
     ) {
         // 再生、一時停止ボタン
@@ -39,11 +38,11 @@ fun MusicPlayer(viewModel: MusicPlayerViewModel) {
                 contentDescription = if (isPlaying) "Pause" else "Play",
                 tint = Purple500,
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(50.dp)
             )
         }
 
-        Spacer(modifier = Modifier.width(15.dp))
+        Spacer(modifier = Modifier.width(12.dp))
 
         // スライダー
         Slider(
