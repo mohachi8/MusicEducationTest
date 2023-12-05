@@ -9,10 +9,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.musiceducationtest.repository.LessonRepository
 import com.example.musiceducationtest.viewmodel.LessonViewModel
 
 // トップバー
@@ -36,9 +39,9 @@ fun TopBar(navController: NavController, lessonViewModel: LessonViewModel) {
         Spacer(modifier = Modifier.weight(1f))
 
         if (currentRoute != "lessonSelectionScreen") { // 問題選択画面では非表示
-            Text(text = selectedLesson?.title ?:"エラー")
+            Text(text = selectedLesson?.title ?: "レッスン0")
             Spacer(modifier = Modifier.width(20.dp))
-            Text(text = selectedLesson?.songTitle ?:"エラー")
+            Text(text = selectedLesson?.songTitle ?: "曲が選択されていません。")
         }
     }
 }
@@ -48,6 +51,18 @@ fun getTitleForRoute(route: String?): String {
         "lessonSelectionScreen" -> "レッスンを えらんで 学習を スタート"
         "explanationScreen" -> "曲を きいてください。"
         "songCompositionScreen" -> "ブロックを ならびかえて もとの曲を さいげん しましょう。"
-        else -> "エラー"
+        else -> "エラー：画面が選択されていません。"
     }
+}
+
+// プレビュー表示
+@Preview(showBackground = true, device = "id:pixel_c")
+@Composable
+fun TopBarPreview() {
+    val navController = rememberNavController()
+    val dummyLessonViewModel = createDummyLessonViewModel()
+    TopBar(navController = navController, lessonViewModel = dummyLessonViewModel)
+}
+fun createDummyLessonViewModel(): LessonViewModel {
+    return LessonViewModel(lessonRepository = LessonRepository())
 }

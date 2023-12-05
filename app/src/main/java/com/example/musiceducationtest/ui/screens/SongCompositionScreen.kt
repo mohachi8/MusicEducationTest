@@ -66,7 +66,7 @@ fun SongCompositionScreen(lessonViewModel: LessonViewModel) {
             Spacer(modifier = Modifier.height(20.dp))
 
             // 選択肢エリア
-            BlockArea()
+            BlockArea(lessonViewModel)
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -78,10 +78,7 @@ fun SongCompositionScreen(lessonViewModel: LessonViewModel) {
 @Preview(showBackground = true, device = "id:pixel_c")
 @Composable
 fun PreviewSongCompositionScreen() {
-    // ダミーデータまたはモックビューモデルを作成
     val dummyLessonViewModel = createDummyLessonViewModel()
-
-    // SongCompositionScreenのプレビュー
     SongCompositionScreen(lessonViewModel = dummyLessonViewModel)
 }
 
