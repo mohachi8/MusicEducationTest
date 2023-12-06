@@ -21,6 +21,7 @@ import com.example.musiceducationtest.ui.screens.SongCompositionScreen
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
 import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
+import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +33,8 @@ class MainActivity : ComponentActivity() {
                 val lessonViewModel: LessonViewModel = hiltViewModel()
                 val bottomBarViewModel: BottomBarViewModel = hiltViewModel()
                 val musicPlayerViewModel: MusicPlayerViewModel = hiltViewModel()
+                val songCompositionViewModel: SongCompositionViewModel = hiltViewModel()
+
                 val navController = rememberNavController()
                 val currentRoute =
                     navController.currentBackStackEntryAsState().value?.destination?.route
@@ -67,7 +70,7 @@ class MainActivity : ComponentActivity() {
                             }
                             // 学習画面
                             composable("songCompositionScreen") {
-                                SongCompositionScreen(lessonViewModel)
+                                SongCompositionScreen(lessonViewModel,songCompositionViewModel)
                             }
                         }
                     }
