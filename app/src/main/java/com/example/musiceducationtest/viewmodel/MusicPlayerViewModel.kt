@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musiceducationtest.R
+import com.example.musiceducationtest.helper.MediaPlayerHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -19,88 +20,73 @@ import javax.inject.Inject
 class MusicPlayerViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
+    private val mediaPlayerHelper = MediaPlayerHelper(application)
+    private val _isPlaying = MutableStateFlow(false)
+    private val _playbackPosition = MutableStateFlow(0f)
+    private val _isSliderBeingTouched = MutableStateFlow(false)
 
-    /* -------------------------- 変数の定義 -------------------------- */
-    private var mediaPlayer: MediaPlayer? = null
-    private val _isPlaying = MutableStateFlow(false) // 再生状態のフラグ（このクラス内のみで使用）
-    private val _playbackPosition = MutableStateFlow(0f) // スライダーの位置（このクラス内のみで使用）
-    private val _isSliderBeingTouched = MutableStateFlow(false) // スライダーが操作されている時のフラグ
+    val isPlaying: StateFlow<Boolean> = _isPlaying // 再生しているかどうかを保持
+    val playbackPosition: StateFlow<Float> = _playbackPosition // 再生位置
 
-    val isPlaying: StateFlow<Boolean> = _isPlaying // 再生状態のフラグ
-    val playbackPosition: StateFlow<Float> = _playbackPosition // スライダーの位置
-
-    /* -------------------------- 処理 -------------------------- */
     // スライダーの位置を更新するメソッド
     private fun startPlaybackPositionUpdater() {
         viewModelScope.launch {
             while (isActive) {
                 if (!_isSliderBeingTouched.value) {
-                    mediaPlayer?.let { player ->
+                    mediaPlayerHelper.getMediaPlayer()?.let { player ->
                         val currentPosition = player.currentPosition.toFloat()
                         val totalDuration = player.duration.toFloat()
                         _playbackPosition.value = currentPosition / totalDuration
                     }
                 }
-                delay(100) // 更新間隔を 0.1 秒に設定
+                delay(100)
             }
         }
-    }
-
-    fun initializeMediaPlayer(musicResId: Int) {
-        if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(getApplication(), musicResId).apply {
-                setOnCompletionListener {
-                    _isPlaying.value = false
-                }
-            }
-            startPlaybackPositionUpdater()
-        }
-    }
-
-    // 再生ボタンが押された時のメソッド
-    fun togglePlayPause() {
-        mediaPlayer?.let {
-            if (it.isPlaying) {
-                it.pause()
-                _isPlaying.value = false
-            } else {
-                it.start()
-                _isPlaying.value = true
-            }
-        }
-    }
-
-    // 音楽を停止し、MediaPlayerのリソースを解放するメソッド
-    fun releaseMediaPlayer() {
-        mediaPlayer?.let {
-            if (it.isPlaying) {
-                it.stop()  // 音楽の再生を停止
-                _isPlaying.value = false
-            }
-            it.release()  // MediaPlayerのリソースを解放
-        }
-        mediaPlayer = null  // MediaPlayerをnullに設定
     }
 
     // スライダーの値が変化した時に呼び出されるメソッド
+    // スライダーに触れている時はスライドバーの見た目だけ変更
     fun onSliderValueChanged(value: Float) {
         _isSliderBeingTouched.value = true
         _playbackPosition.value = value
     }
 
-    // スライダーの操作が完了した時に呼び出されるメソッド
+    // スライダーの操作が終了した時に呼び出されるメソッド
+    // スライダーから指を離した時に実際の音楽の再生位置を変更
     fun onSliderValueChangeFinished() {
         _isSliderBeingTouched.value = false
-        mediaPlayer?.let {
+        mediaPlayerHelper.getMediaPlayer()?.let {
             val newPosition = (_playbackPosition.value * it.duration).toInt()
             it.seekTo(newPosition)
         }
     }
 
+    // MediaPlayerの初期化
+    // レッスンが選択されたら呼び出される
+    fun initializeMediaPlayer(musicResId: Int) {
+        mediaPlayerHelper.initializeMediaPlayer(musicResId)
+        startPlaybackPositionUpdater()
+    }
+
+    // 再生ボタンが押された時のメソッド
+    // 再生と一時停止の変数、isPlayingが入れ替わる
+    fun togglePlayPause() {
+        val isPlayingNow = mediaPlayerHelper.getMediaPlayer()?.isPlaying ?: false
+        _isPlaying.value = !isPlayingNow
+        mediaPlayerHelper.togglePlayPause(isPlayingNow)
+    }
+
+    // 音楽を停止し、MediaPlayerのリソースを解放するメソッド
+    // レッスンを終了してレッスン選択画面に戻る際に呼び出される
+    fun releaseMediaPlayer() {
+        _isPlaying.value = false
+        mediaPlayerHelper.releaseMediaPlayer()
+    }
+
     // ViewModelが破棄される際に呼び出されるメソッド
     override fun onCleared() {
-        mediaPlayer?.release()
-        mediaPlayer = null
+        _isPlaying.value = false
+        mediaPlayerHelper.releaseMediaPlayer()
         super.onCleared()
     }
 }

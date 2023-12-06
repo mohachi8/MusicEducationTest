@@ -13,10 +13,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BottomBarViewModel @Inject constructor() : ViewModel() {
-    // ダイアログ表示の状態を管理
     private val _showDialog = MutableStateFlow(false)
-    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
 
+    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow() // ダイアログ表示の状態を管理
+
+    // やめるボタンを押した時に呼び出されるメソッド
     fun toggleDialog(show: Boolean) {
         _showDialog.value = show
     }
