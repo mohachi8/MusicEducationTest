@@ -44,6 +44,7 @@ fun LessonBox(
             .clickable {
                 // 選択肢したレッスンをlessonViewModelで保持
                 lessonViewModel.selectLesson(lesson.id)
+                lessonViewModel.loadLessonSounds(lesson.id)
                 // レッスン説明画面に遷移
                 navController.navigate("explanationScreen")
             },

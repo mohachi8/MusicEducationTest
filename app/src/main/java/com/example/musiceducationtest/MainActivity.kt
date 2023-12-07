@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.musiceducationtest.ui.theme.MusicEducationTestTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
