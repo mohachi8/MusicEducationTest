@@ -1,13 +1,10 @@
 package com.example.musiceducationtest.viewmodel
 
 import android.app.Application
-import android.media.MediaPlayer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.musiceducationtest.R
 import com.example.musiceducationtest.helper.MediaPlayerHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

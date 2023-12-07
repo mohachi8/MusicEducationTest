@@ -48,6 +48,7 @@ fun BlockArea(
                         .clip(RoundedCornerShape(4.dp))
                         .clickable {
                             songCompositionViewModel.selectBlock(block.id)
+                            //songCompositionViewModel.playSelectedBlockSound(block.id)
                         }
                         .border(
                             width = if (isSelected) 4.dp else 0.dp,
