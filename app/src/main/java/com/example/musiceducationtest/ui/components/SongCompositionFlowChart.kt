@@ -1,7 +1,6 @@
 package com.example.musiceducationtest.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,7 +54,7 @@ fun SongCompositionFlowChart() {
                 modifier = Modifier.size(40.dp)
             )
         }
-        items(10) { index ->
+        items(10) {
             Box(
                 modifier = Modifier
                     .padding(5.dp)
