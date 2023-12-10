@@ -1,15 +1,16 @@
 package com.example.musiceducationtest.helper
 
+import android.app.Application
 import android.content.Context
 import android.media.MediaPlayer
 
-class MediaPlayerHelper(private val context: Context) {
+class MediaPlayerHelper(private val application: Application) {
     private var mediaPlayer: MediaPlayer? = null
 
     // MediaPlayerの初期化
     fun initializeMediaPlayer(musicResId: Int) {
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(context, musicResId)
+            mediaPlayer = MediaPlayer.create(application, musicResId)
         }
     }
 

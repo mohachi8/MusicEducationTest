@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                             }
                             // 学習画面
                             composable("songCompositionScreen") {
-                                SongCompositionScreen(lessonViewModel,songCompositionViewModel)
+                                SongCompositionScreen(lessonViewModel, songCompositionViewModel)
                             }
                         }
                     }

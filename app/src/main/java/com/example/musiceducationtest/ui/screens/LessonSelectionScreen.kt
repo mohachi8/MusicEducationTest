@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.components.LessonBox
 import com.example.musiceducationtest.viewmodel.LessonViewModel
+import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 @Composable
 fun LessonSelectionScreen(navController: NavController,lessonViewModel: LessonViewModel) {

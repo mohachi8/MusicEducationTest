@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import com.example.musiceducationtest.model.LessonDataModel
 import com.example.musiceducationtest.ui.theme.Purple200
 import com.example.musiceducationtest.viewmodel.LessonViewModel
+import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 // 選択肢のBox
 @Composable
@@ -44,7 +45,6 @@ fun LessonBox(
             .clickable {
                 // 選択肢したレッスンをlessonViewModelで保持
                 lessonViewModel.selectLesson(lesson.id)
-                lessonViewModel.loadLessonSounds(lesson.id)
                 // レッスン説明画面に遷移
                 navController.navigate("explanationScreen")
             },
