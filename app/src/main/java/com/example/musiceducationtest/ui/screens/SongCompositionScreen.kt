@@ -9,9 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.musiceducationtest.repository.LessonRepository
 import com.example.musiceducationtest.ui.components.BlockArea
 import com.example.musiceducationtest.ui.components.ControlButtons
 import com.example.musiceducationtest.ui.components.FlowChartMusicStartButton
@@ -40,7 +38,7 @@ fun SongCompositionScreen(
         ) {
 
             // 「曲を再生」ボタン
-            FlowChartMusicStartButton()
+            FlowChartMusicStartButton(songCompositionViewModel)
 
             Spacer(modifier = Modifier.width(10.dp))
 
@@ -54,7 +52,7 @@ fun SongCompositionScreen(
             Spacer(modifier = Modifier.width(10.dp))
 
             // フローチャート
-            SongCompositionFlowChart()
+            SongCompositionFlowChart(songCompositionViewModel)
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -69,7 +67,7 @@ fun SongCompositionScreen(
                 .padding(20.dp),
         ) {
             // 選択肢操作ボタンエリア
-            ControlButtons()
+            ControlButtons(songCompositionViewModel)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -80,19 +78,3 @@ fun SongCompositionScreen(
         Spacer(modifier = Modifier.weight(1f))
     }
 }
-
-
-/*
-// プレビュー表示
-@Preview(showBackground = true, device = "id:pixel_c")
-@Composable
-fun PreviewSongCompositionScreen() {
-    val dummyLessonViewModel = createDummyLessonViewModel()
-    SongCompositionScreen(lessonViewModel = dummyLessonViewModel)
-}
-
-fun createDummyLessonViewModel(): LessonViewModel {
-    return LessonViewModel(lessonRepository = LessonRepository())
-}
-
- */

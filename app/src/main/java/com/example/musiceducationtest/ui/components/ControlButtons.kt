@@ -19,9 +19,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 @Composable
-fun ControlButtons() {
+fun ControlButtons(songCompositionViewModel: SongCompositionViewModel) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -31,7 +32,9 @@ fun ControlButtons() {
             fontWeight = FontWeight.ExtraBold,
         )
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = { /*TODO*/ }) {
+
+        // 「えらぶ」ボタン
+        Button(onClick = { songCompositionViewModel.addToFlowChart() }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(5.dp)
@@ -48,8 +51,11 @@ fun ControlButtons() {
                 )
             }
         }
+
         Spacer(modifier = Modifier.width(20.dp))
-        Button(onClick = { /*TODO*/ }) {
+
+        // 「もどす」ボタン
+        Button(onClick = { songCompositionViewModel.removeFromFlowChart() }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(5.dp)
@@ -67,8 +73,10 @@ fun ControlButtons() {
             }
         }
         Spacer(modifier = Modifier.width(20.dp))
+
+        // 「クリア」ボタン
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { songCompositionViewModel.clearFlowChart() },
             colors = ButtonDefaults.buttonColors(Color.Red)
         ) {
             Row(

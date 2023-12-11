@@ -18,11 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musiceducationtest.ui.theme.Teal200
+import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 @Composable
-fun FlowChartMusicStartButton() {
+fun FlowChartMusicStartButton(songCompositionViewModel: SongCompositionViewModel) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { songCompositionViewModel.startFlowChartMusic() },
         colors = ButtonDefaults.buttonColors(Teal200)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

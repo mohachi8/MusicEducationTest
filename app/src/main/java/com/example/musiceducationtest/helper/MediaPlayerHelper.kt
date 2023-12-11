@@ -12,10 +12,10 @@ class MediaPlayerHelper(private val application: Application) {
     }
 
     // MediaPlayerの初期化
+
     fun initializeMediaPlayer(musicResId: Int) {
-        if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(application, musicResId)
-        }
+        mediaPlayer?.reset() // MediaPlayerをリセット
+        mediaPlayer = MediaPlayer.create(application, musicResId)
     }
 
     // 再生が終了したときの処理

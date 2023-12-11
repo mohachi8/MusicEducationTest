@@ -1,8 +1,10 @@
 package com.example.musiceducationtest.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.example.musiceducationtest.helper.MediaPlayerHelper
+import com.example.musiceducationtest.repository.LessonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,6 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SongCompositionViewModel @Inject constructor(
+    private val lessonRepository: LessonRepository,
     application: Application
 ) : AndroidViewModel(application) {
     private val mediaPlayerHelper = MediaPlayerHelper(application)
@@ -19,6 +22,57 @@ class SongCompositionViewModel @Inject constructor(
 
     val selectedBlockId: StateFlow<String?> = _selectedBlockId // 選択されたブロックのIDを保持する変数
     val isPlaying: StateFlow<Boolean> = _isPlaying // 再生しているかどうかを保持
+
+
+    private val _flowChartBlocks = MutableStateFlow<List<String>>(emptyList())
+    val flowChartBlocks: StateFlow<List<String>> = _flowChartBlocks
+
+    fun addToFlowChart() {
+        selectedBlockId.value?.let { selectedBlock ->
+            _flowChartBlocks.value = _flowChartBlocks.value + selectedBlock
+        }
+    }
+
+    fun removeFromFlowChart() {
+        if (_flowChartBlocks.value.isNotEmpty()) {
+            _flowChartBlocks.value = _flowChartBlocks.value.dropLast(1)
+        }
+    }
+
+    fun clearFlowChart() {
+        _flowChartBlocks.value = emptyList()
+    }
+
+
+    fun startFlowChartMusic() {
+        val blocks = _flowChartBlocks.value
+        if (blocks.isNotEmpty()) {
+            playMusicSequence(blocks, 0)
+        }
+    }
+
+    private fun playMusicSequence(blocks: List<String>, index: Int) {
+        if (index < blocks.size) {
+            val blockId = blocks[index]
+            val musicResId = getMusicResIdFromBlockId(blockId)
+            mediaPlayerHelper.initializeMediaPlayer(musicResId)
+            mediaPlayerHelper.setOnCompletionListener {
+                playMusicSequence(blocks, index + 1)
+            }
+            mediaPlayerHelper.togglePlayPause(isPlaying = false)
+        }
+    }
+    private fun getMusicResIdFromBlockId(blockId: String): Int {
+        lessonRepository.getAllLessons().forEach { lesson ->
+            lesson.flowChartBlocks.forEach { block ->
+                if (block.id == blockId) {
+                    Log.d("SongCompositionVM", "Block ID: $blockId, Music Res ID: ${block.musicResId}")
+                    return block.musicResId
+                }
+            }
+        }
+        return -1 // ブロックIDが見つからない場合
+    }
 
     // ブロックを選択するメソッド
     fun selectBlock(blockId: String) {
