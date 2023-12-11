@@ -69,9 +69,8 @@ class MusicPlayerViewModel @Inject constructor(
     // 再生ボタンが押された時のメソッド
     // 再生と一時停止の変数、isPlayingが入れ替わる
     fun togglePlayPause() {
-        val isPlayingNow = mediaPlayerHelper.getMediaPlayer()?.isPlaying ?: false
-        _isPlaying.value = !isPlayingNow
-        mediaPlayerHelper.togglePlayPause(isPlayingNow)
+        _isPlaying.value = !mediaPlayerHelper.isPlaying()
+        mediaPlayerHelper.togglePlayPause(mediaPlayerHelper.isPlaying())
     }
 
     // 音楽を停止し、MediaPlayerのリソースを解放するメソッド

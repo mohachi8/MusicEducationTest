@@ -7,18 +7,26 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.musiceducationtest.ui.theme.Purple200
+import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
@@ -29,6 +37,7 @@ fun BlockArea(
 ) {
     val lesson by lessonViewModel.selectedLesson.collectAsState()
     val selectedBlockId by songCompositionViewModel.selectedBlockId.collectAsState()
+    val isPlaying by songCompositionViewModel.isPlaying.collectAsState()
 
     // 選択されたレッスンの flowChartBlocks が null でないことを確認
     lesson?.flowChartBlocks?.let { blocks ->
@@ -50,9 +59,10 @@ fun BlockArea(
                             songCompositionViewModel.selectBlock(block.id)
                             songCompositionViewModel.playBlockMusic(block.musicResId)
                         }
+                        // ブロックが選択されているときに枠を表示
                         .border(
                             width = if (isSelected) 4.dp else 0.dp,
-                            color = if (isSelected) Color.Red else Color.Transparent,
+                            color = if (isSelected) Purple500 else Color.Transparent,
                             shape = RoundedCornerShape(4.dp)
                         )
                 ) {
@@ -60,6 +70,18 @@ fun BlockArea(
                         painter = painterResource(id = block.imageResId),
                         contentDescription = block.id
                     )
+                    // 選択されたブロックが再生中の時にアイコンを表示
+                    if (isPlaying && isSelected) {
+                        Icon(
+                            imageVector = Icons.Default.PlayCircle,
+                            contentDescription = "再生中",
+                            tint = Purple200,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .size(80.dp)
+                                .alpha(0.8f)
+                        )
+                    }
                 }
             }
         }

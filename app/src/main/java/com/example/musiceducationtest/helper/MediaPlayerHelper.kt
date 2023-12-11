@@ -35,6 +35,11 @@ class MediaPlayerHelper(private val application: Application) {
         }
     }
 
+    // 再生中:true, 停止中：false
+    fun isPlaying(): Boolean {
+        return mediaPlayer?.isPlaying ?: false
+    }
+
     // MediaPlayerの解放
     fun releaseMediaPlayer() {
         mediaPlayer?.release()

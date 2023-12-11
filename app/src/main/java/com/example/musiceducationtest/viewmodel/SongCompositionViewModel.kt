@@ -14,8 +14,11 @@ class SongCompositionViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     private val mediaPlayerHelper = MediaPlayerHelper(application)
     private var currentlyPlayingMusic: Int? = null // 現在再生中の曲
-    private val _selectedBlockId = MutableStateFlow<String?>(null) // 選択されたブロックのIDを保持する変数
-    val selectedBlockId: StateFlow<String?> = _selectedBlockId
+    private val _selectedBlockId = MutableStateFlow<String?>(null)
+    private val _isPlaying = MutableStateFlow(false)
+
+    val selectedBlockId: StateFlow<String?> = _selectedBlockId // 選択されたブロックのIDを保持する変数
+    val isPlaying: StateFlow<Boolean> = _isPlaying // 再生しているかどうかを保持
 
     // ブロックを選択するメソッド
     fun selectBlock(blockId: String) {
@@ -24,16 +27,19 @@ class SongCompositionViewModel @Inject constructor(
 
     // ブロックの音楽を再生するメソッド
     fun playBlockMusic(musicResId: Int) {
-        currentlyPlayingMusic = if (currentlyPlayingMusic == musicResId) {
-            // 同じブロックが再度クリックされた場合、再生を停止
+        if (currentlyPlayingMusic == musicResId && mediaPlayerHelper.isPlaying()) {
+            // 再生中かつ、同じブロックが再度クリックされた場合、再生を停止
             mediaPlayerHelper.togglePlayPause(isPlaying = true)
-            null // 現在のブロックをリセット（currentlyPlayingMusic）
+            currentlyPlayingMusic = null // 現在のブロックをリセット
+            _isPlaying.value = false // 停止状態にする
         } else {
             // 異なるブロックがクリックされた場合、新しい曲の再生を始める
             mediaPlayerHelper.releaseMediaPlayer() // 既存のMediaPlayerをリリース
             mediaPlayerHelper.initializeMediaPlayer(musicResId) // 新しい音楽リソースでMediaPlayerを初期化
             mediaPlayerHelper.togglePlayPause(isPlaying = false) // 再生開始
-            musicResId // 現在再生中のブロックに更新（currentlyPlayingMusic）
+            currentlyPlayingMusic = musicResId // 現在再生中のブロックに更新
+            _isPlaying.value = true // 再生状態にする
+            mediaPlayerHelper.setOnCompletionListener { _isPlaying.value = false } // 再生が終了したら停止状態
         }
     }
 
