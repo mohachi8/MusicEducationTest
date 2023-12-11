@@ -1,16 +1,28 @@
 package com.example.musiceducationtest.helper
 
 import android.app.Application
-import android.content.Context
 import android.media.MediaPlayer
 
 class MediaPlayerHelper(private val application: Application) {
     private var mediaPlayer: MediaPlayer? = null
 
+    // getter
+    fun getMediaPlayer(): MediaPlayer? {
+        return mediaPlayer
+    }
+
     // MediaPlayerの初期化
     fun initializeMediaPlayer(musicResId: Int) {
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(application, musicResId)
+        }
+    }
+
+    // 再生が終了したときの処理
+    fun setOnCompletionListener(onCompletion: () -> Unit) {
+        mediaPlayer?.setOnCompletionListener {
+            onCompletion()
+            mediaPlayer?.seekTo(0) // 再生位置をリセット
         }
     }
 
@@ -27,9 +39,5 @@ class MediaPlayerHelper(private val application: Application) {
     fun releaseMediaPlayer() {
         mediaPlayer?.release()
         mediaPlayer = null
-    }
-
-    fun getMediaPlayer(): MediaPlayer? {
-        return mediaPlayer
     }
 }

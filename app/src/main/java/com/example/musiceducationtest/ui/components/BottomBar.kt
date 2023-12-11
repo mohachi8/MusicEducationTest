@@ -1,6 +1,5 @@
 package com.example.musiceducationtest.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -19,6 +18,7 @@ import com.example.musiceducationtest.R
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
 import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
+import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 // ボトムバー
 @Composable
@@ -26,7 +26,8 @@ fun BottomBar(
     navController: NavController,
     lessonViewModel: LessonViewModel,
     bottomBarViewModel: BottomBarViewModel,
-    musicPlayerViewModel: MusicPlayerViewModel
+    musicPlayerViewModel: MusicPlayerViewModel,
+    songCompositionViewModel: SongCompositionViewModel
 ) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val showDialog by bottomBarViewModel.showDialog.collectAsState()
@@ -43,7 +44,7 @@ fun BottomBar(
 
     // ダイアログの表示（やめるボタンを押した時の処理）
     if (showDialog) {
-        ConfirmExitDialog(navController, bottomBarViewModel, musicPlayerViewModel)
+        ConfirmExitDialog(navController, bottomBarViewModel, musicPlayerViewModel,songCompositionViewModel)
     }
 
     Row(

@@ -62,6 +62,7 @@ class MusicPlayerViewModel @Inject constructor(
     // レッスンが選択されたら呼び出される
     fun initializeMediaPlayer(musicResId: Int) {
         mediaPlayerHelper.initializeMediaPlayer(musicResId)
+        mediaPlayerHelper.setOnCompletionListener { _isPlaying.value = false } // 再生が終了したときの処理
         startPlaybackPositionUpdater()
     }
 

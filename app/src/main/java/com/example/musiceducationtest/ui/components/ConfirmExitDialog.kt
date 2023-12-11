@@ -9,12 +9,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
+import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 @Composable
 fun ConfirmExitDialog(
     navController: NavController,
     bottomBarViewModel: BottomBarViewModel,
-    musicPlayerViewModel:MusicPlayerViewModel
+    musicPlayerViewModel:MusicPlayerViewModel,
+    songCompositionViewModel: SongCompositionViewModel
 ) {
     AlertDialog(
         onDismissRequest = {
@@ -39,6 +41,8 @@ fun ConfirmExitDialog(
                 onClick = {
                     // 音楽プレイヤーのリソースを解放
                     musicPlayerViewModel.releaseMediaPlayer()
+                    // フローチャートをリセット
+                    songCompositionViewModel.resetFlowChart()
                     // 終了の処理
                     navController.navigate("lessonSelectionScreen")
                     bottomBarViewModel.toggleDialog(false)

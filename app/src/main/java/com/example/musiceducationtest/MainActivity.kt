@@ -49,7 +49,8 @@ class MainActivity : ComponentActivity() {
                                     navController,
                                     lessonViewModel,
                                     bottomBarViewModel,
-                                    musicPlayerViewModel
+                                    musicPlayerViewModel,
+                                    songCompositionViewModel
                                 )
                             }
                         }

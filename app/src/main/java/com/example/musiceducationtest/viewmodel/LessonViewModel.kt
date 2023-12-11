@@ -1,6 +1,5 @@
 package com.example.musiceducationtest.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.example.musiceducationtest.repository.LessonRepository
 import com.example.musiceducationtest.model.LessonDataModel
@@ -8,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
-import com.example.musiceducationtest.helper.SoundPoolHelper
 
 
 // レッスンデータの管理をするViewModel
