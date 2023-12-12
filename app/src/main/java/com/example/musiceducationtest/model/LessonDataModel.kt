@@ -5,7 +5,8 @@ data class LessonDataModel(
     val title: String, // レッスンタイトル
     val songTitle: String, // 曲の題名
     val description: String, // レッスンの説明
-    val musicResId: Int, // 曲のリソースID（Int）
+    val musicResId: Int, // 曲のリソースID（Int）,
+    val firstFlowChartBlock: BlockDataModel,
     var flowChartBlocks: List<BlockDataModel>, // フローチャートのブロックデータ
     val answers: List<String> // 問題の答え
 )

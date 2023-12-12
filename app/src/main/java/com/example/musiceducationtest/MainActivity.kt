@@ -62,7 +62,11 @@ class MainActivity : ComponentActivity() {
                         ) {
                             // 問題選択画面
                             composable("lessonSelectionScreen") {
-                                LessonSelectionScreen(navController, lessonViewModel)
+                                LessonSelectionScreen(
+                                    navController,
+                                    lessonViewModel,
+                                    songCompositionViewModel
+                                )
                             }
                             // 問題説明画面
                             composable("explanationScreen") {

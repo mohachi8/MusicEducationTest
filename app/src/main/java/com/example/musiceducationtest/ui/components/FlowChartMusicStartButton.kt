@@ -9,8 +9,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.StopCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -32,14 +32,14 @@ fun FlowChartMusicStartButton(songCompositionViewModel: SongCompositionViewModel
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(
-                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                imageVector = if (isPlaying) Icons.Default.StopCircle else Icons.Default.PlayCircle,
                 contentDescription = "再生",
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = "曲を再生",
+                text = if (isPlaying) "曲を停止" else "曲を再生",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White

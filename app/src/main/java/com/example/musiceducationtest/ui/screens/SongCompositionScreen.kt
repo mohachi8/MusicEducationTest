@@ -67,7 +67,7 @@ fun SongCompositionScreen(
                 .padding(20.dp),
         ) {
             // 選択肢操作ボタンエリア
-            ControlButtons(songCompositionViewModel)
+            ControlButtons(lessonViewModel, songCompositionViewModel)
 
             Spacer(modifier = Modifier.height(20.dp))
 

@@ -32,6 +32,7 @@ import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 fun LessonBox(
     lesson: LessonDataModel,
     lessonViewModel: LessonViewModel,
+    songCompositionViewModel: SongCompositionViewModel,
     navController: NavController,
 ) {
     Box(
@@ -45,6 +46,10 @@ fun LessonBox(
             .clickable {
                 // 選択肢したレッスンをlessonViewModelで保持
                 lessonViewModel.selectLesson(lesson.id)
+
+                // フローチャートを初期化
+                songCompositionViewModel.initializeFlowChart(lesson.id)
+
                 // レッスン説明画面に遷移
                 navController.navigate("explanationScreen")
             },

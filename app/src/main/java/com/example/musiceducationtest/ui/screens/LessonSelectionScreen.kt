@@ -15,7 +15,7 @@ import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 @Composable
-fun LessonSelectionScreen(navController: NavController,lessonViewModel: LessonViewModel) {
+fun LessonSelectionScreen(navController: NavController,lessonViewModel: LessonViewModel,songCompositionViewModel: SongCompositionViewModel) {
     val lessons = lessonViewModel.allLessons // 全てのレッスンを取得
 
     Column() {
@@ -34,6 +34,7 @@ fun LessonSelectionScreen(navController: NavController,lessonViewModel: LessonVi
                 LessonBox(
                     lesson = lesson,
                     lessonViewModel = lessonViewModel,
+                    songCompositionViewModel = songCompositionViewModel,
                     navController = navController
                 )
             }

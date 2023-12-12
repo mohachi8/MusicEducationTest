@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.example.musiceducationtest.helper.MediaPlayerHelper
+import com.example.musiceducationtest.model.BlockDataModel
 import com.example.musiceducationtest.repository.LessonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,35 +18,47 @@ class SongCompositionViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     private val mediaPlayerHelper = MediaPlayerHelper(application)
     private var currentlyPlayingMusic: Int? = null // 現在再生中の曲
-    private val _selectedBlockId = MutableStateFlow<String?>(null)
+    private val _selectedBlock = MutableStateFlow<BlockDataModel?>(null)
+    private val _flowChartBlocks = MutableStateFlow<List<BlockDataModel>>(emptyList())
     private val _isPlaying = MutableStateFlow(false)
     private val _isPlayingFlowChart = MutableStateFlow(false)
-    private val _flowChartBlocks = MutableStateFlow<List<String>>(emptyList())
 
-    val selectedBlockId: StateFlow<String?> = _selectedBlockId // 選択されたブロックのIDを保持する変数
+    val selectedBlock: StateFlow<BlockDataModel?> = _selectedBlock
     val isPlaying: StateFlow<Boolean> = _isPlaying // 再生しているかどうかを保持
     val isPlayingFlowChart: StateFlow<Boolean> = _isPlayingFlowChart // 再生しているかどうかを保持
-    val flowChartBlocks: StateFlow<List<String>> = _flowChartBlocks
+    val flowChartBlocks: StateFlow<List<BlockDataModel>> = _flowChartBlocks
 
-    // フローチャートに追加
-    fun addToFlowChart() {
-        selectedBlockId.value?.let { selectedBlock ->
-            _flowChartBlocks.value = _flowChartBlocks.value + selectedBlock
+    // 選択されたレッスンに基づいてフローチャートを初期化
+    fun initializeFlowChart(lessonId: String) {
+        val lesson = lessonRepository.getLessonById(lessonId)
+        _flowChartBlocks.value = emptyList()
+        lesson?.let {
+            val initialBlocks = listOf(lesson.firstFlowChartBlock)// + lesson.flowChartBlocks
+            _flowChartBlocks.value = initialBlocks
         }
     }
 
-    // フローチャートから一つ削除
+    // 選択したブロックをフローチャートに追加
+    fun addToFlowChart() {
+        selectedBlock.value?.let { block ->
+            _flowChartBlocks.value = _flowChartBlocks.value + block
+        }
+    }
+
+    // クリックしたブロックを選択
+    fun selectBlock(block: BlockDataModel) {
+        _selectedBlock.value = block
+    }
+
+    // フローチャートの要素を一つ削除
     fun removeFromFlowChart() {
-        if (_flowChartBlocks.value.isNotEmpty()) {
+        if (_flowChartBlocks.value.size > 1) {
+            // リストに2つ以上の要素がある場合のみ、最後の要素を削除
             _flowChartBlocks.value = _flowChartBlocks.value.dropLast(1)
         }
     }
 
-    // フローチャートをクリア
-    fun clearFlowChart() {
-        _flowChartBlocks.value = emptyList()
-    }
-
+    // フローチャートの再生ボタンが押された時の処理
     fun startFlowChartMusic() {
         if (_isPlayingFlowChart.value) {
             // 既に再生中の場合は再生を停止
@@ -62,11 +75,11 @@ class SongCompositionViewModel @Inject constructor(
         }
     }
 
-    private fun playMusicSequence(blocks: List<String>, index: Int) {
+    // フローチャートの音楽を組み立てるメソッド
+    private fun playMusicSequence(blocks: List<BlockDataModel>, index: Int) {
         if (index < blocks.size) {
-            val blockId = blocks[index]
-            val musicResId = getMusicResIdFromBlockId(blockId)
-            mediaPlayerHelper.initializeMediaPlayer(musicResId)
+            val block = blocks[index]
+            mediaPlayerHelper.initializeMediaPlayer(block.musicResId)
             mediaPlayerHelper.setOnCompletionListener {
                 if (index + 1 < blocks.size) {
                     playMusicSequence(blocks, index + 1)
@@ -78,26 +91,6 @@ class SongCompositionViewModel @Inject constructor(
         } else {
             _isPlayingFlowChart.value = false
         }
-    }
-
-    private fun getMusicResIdFromBlockId(blockId: String): Int {
-        lessonRepository.getAllLessons().forEach { lesson ->
-            lesson.flowChartBlocks.forEach { block ->
-                if (block.id == blockId) {
-                    Log.d(
-                        "SongCompositionVM",
-                        "Block ID: $blockId, Music Res ID: ${block.musicResId}"
-                    )
-                    return block.musicResId
-                }
-            }
-        }
-        return -1 // ブロックIDが見つからない場合
-    }
-
-    // 選択肢ブロックを選択するメソッド
-    fun selectBlock(blockId: String) {
-        _selectedBlockId.value = blockId
     }
 
     // 選択肢ブロックの音楽を再生するメソッド
@@ -120,7 +113,6 @@ class SongCompositionViewModel @Inject constructor(
     // フローチャートをリセットするメソッド
     fun resetFlowChart() {
         mediaPlayerHelper.releaseMediaPlayer() // MediaPlayerをリリース
-        _selectedBlockId.value = null  // 選択したブロックをリセット
-        clearFlowChart() // フローチャートをリセット
+        _selectedBlock.value = null  // 選択したブロックをリセット
     }
 }

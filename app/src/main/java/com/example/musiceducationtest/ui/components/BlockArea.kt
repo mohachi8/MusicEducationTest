@@ -36,7 +36,7 @@ fun BlockArea(
     songCompositionViewModel: SongCompositionViewModel
 ) {
     val lesson by lessonViewModel.selectedLesson.collectAsState()
-    val selectedBlockId by songCompositionViewModel.selectedBlockId.collectAsState()
+    val selectedBlock by songCompositionViewModel.selectedBlock.collectAsState()
     val isPlaying by songCompositionViewModel.isPlaying.collectAsState()
 
     // 選択されたレッスンの flowChartBlocks が null でないことを確認
@@ -48,7 +48,7 @@ fun BlockArea(
         ) {
             items(blocks.size) { index ->
                 val block = blocks[index]
-                val isSelected = block.id == selectedBlockId
+                val isSelected = block == selectedBlock
                 Box(
                     modifier = Modifier
                         .padding(5.dp)
@@ -56,7 +56,7 @@ fun BlockArea(
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(4.dp))
                         .clickable {
-                            songCompositionViewModel.selectBlock(block.id)
+                            songCompositionViewModel.selectBlock(block)
                             songCompositionViewModel.playBlockMusic(block.musicResId)
                         }
                         // ブロックが選択されているときに枠を表示

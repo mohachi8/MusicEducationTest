@@ -13,16 +13,24 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Undo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 @Composable
-fun ControlButtons(songCompositionViewModel: SongCompositionViewModel) {
+fun ControlButtons(
+    lessonViewModel: LessonViewModel,
+    songCompositionViewModel: SongCompositionViewModel
+) {
+    val lesson by lessonViewModel.selectedLesson.collectAsState()
+
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -76,7 +84,7 @@ fun ControlButtons(songCompositionViewModel: SongCompositionViewModel) {
 
         // 「クリア」ボタン
         Button(
-            onClick = { songCompositionViewModel.clearFlowChart() },
+            onClick = { songCompositionViewModel.initializeFlowChart(lesson?.id ?: "") },
             colors = ButtonDefaults.buttonColors(Color.Red)
         ) {
             Row(
