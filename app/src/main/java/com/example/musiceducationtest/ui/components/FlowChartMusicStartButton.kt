@@ -9,8 +9,10 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,13 +24,15 @@ import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
 @Composable
 fun FlowChartMusicStartButton(songCompositionViewModel: SongCompositionViewModel) {
+    val isPlaying = songCompositionViewModel.isPlayingFlowChart.collectAsState().value
+
     Button(
         onClick = { songCompositionViewModel.startFlowChartMusic() },
         colors = ButtonDefaults.buttonColors(Teal200)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(
-                imageVector = Icons.Default.PlayArrow,
+                imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                 contentDescription = "再生",
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
