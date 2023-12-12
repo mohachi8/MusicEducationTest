@@ -1,7 +1,6 @@
 package com.example.musiceducationtest.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.example.musiceducationtest.helper.MediaPlayerHelper
 import com.example.musiceducationtest.model.BlockDataModel
@@ -18,6 +17,7 @@ class SongCompositionViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     private val mediaPlayerHelper = MediaPlayerHelper(application)
     private var currentlyPlayingMusic: Int? = null // 現在再生中の曲
+    private val _firstFlowChartBlock = MutableStateFlow<BlockDataModel?>(null)
     private val _selectedBlock = MutableStateFlow<BlockDataModel?>(null)
     private val _flowChartBlocks = MutableStateFlow<List<BlockDataModel>>(emptyList())
     private val _isPlaying = MutableStateFlow(false)
@@ -33,15 +33,20 @@ class SongCompositionViewModel @Inject constructor(
         val lesson = lessonRepository.getLessonById(lessonId)
         _flowChartBlocks.value = emptyList()
         lesson?.let {
+            _firstFlowChartBlock.value = lesson.firstFlowChartBlock
             val initialBlocks = listOf(lesson.firstFlowChartBlock)// + lesson.flowChartBlocks
             _flowChartBlocks.value = initialBlocks
         }
     }
 
+
     // 選択したブロックをフローチャートに追加
     fun addToFlowChart() {
         selectedBlock.value?.let { block ->
-            _flowChartBlocks.value = _flowChartBlocks.value + block
+            if (block != _firstFlowChartBlock.value) {
+                // 選択されているブロックが firstFlowChartBlock と異なる場合のみ追加
+                _flowChartBlocks.value = _flowChartBlocks.value + block
+            }
         }
     }
 

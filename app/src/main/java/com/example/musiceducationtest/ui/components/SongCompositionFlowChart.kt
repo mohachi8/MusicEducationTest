@@ -3,6 +3,7 @@ package com.example.musiceducationtest.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,7 +45,11 @@ fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel)
                     .width(110.dp)
                     .aspectRatio(1f)
                     .clip(RoundedCornerShape(4.dp))
-                    .background(Purple200),
+                    .background(Purple200)
+                    .clickable { // 押されたら音を再生
+                        songCompositionViewModel.selectBlock(block)
+                        songCompositionViewModel.playBlockMusic(block.musicResId)
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -57,6 +62,7 @@ fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel)
                 contentDescription = "次へ",
                 modifier = Modifier.size(40.dp)
             )
+            // 一番最後にプラスのBoxを表示
             if (index == flowChartBlocks.size - 1) {
                 Box(
                     modifier = Modifier
@@ -67,9 +73,10 @@ fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel)
                         .background(Purple500.copy(alpha = 0.1f))
                         .border(
                             width = 2.dp,
-                            color = Purple500,
+                            color = Purple500.copy(alpha = 0.5f),
                             shape = RoundedCornerShape(4.dp)
-                        ),
+                        )
+                        .clickable { songCompositionViewModel.addToFlowChart() }, // クリックで選択したブロックをフローチャートに追加
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
