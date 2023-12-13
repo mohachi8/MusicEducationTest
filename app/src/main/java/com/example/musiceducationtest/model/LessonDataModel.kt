@@ -8,5 +8,5 @@ data class LessonDataModel(
     val musicResId: Int, // 曲のリソースID（Int）,
     val firstFlowChartBlock: BlockDataModel,
     var flowChartBlocks: List<BlockDataModel>, // フローチャートのブロックデータ
-    val answers: List<String> // 問題の答え
+    val answers: List<BlockDataModel> // 問題の答え
 )

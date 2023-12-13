@@ -8,6 +8,7 @@ import com.example.musiceducationtest.repository.LessonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +28,18 @@ class SongCompositionViewModel @Inject constructor(
     val isPlaying: StateFlow<Boolean> = _isPlaying // 再生しているかどうかを保持
     val isPlayingFlowChart: StateFlow<Boolean> = _isPlayingFlowChart // 再生しているかどうかを保持
     val flowChartBlocks: StateFlow<List<BlockDataModel>> = _flowChartBlocks
+
+    private val _isCorrectOrder = MutableStateFlow<Boolean?>(null)
+    val isCorrectOrder: StateFlow<Boolean?> = _isCorrectOrder
+
+    fun checkAnswer(lessonId: String) {
+        val lesson = lessonRepository.getLessonById(lessonId)
+        val correctOrder = lesson?.answers
+        val currentOrder = _flowChartBlocks.value
+
+        _isCorrectOrder.value = correctOrder?.equals(currentOrder) ?: false
+    }
+
 
     // 選択されたレッスンに基づいてフローチャートを初期化
     fun initializeFlowChart(lessonId: String) {
@@ -123,5 +136,16 @@ class SongCompositionViewModel @Inject constructor(
     fun resetFlowChart() {
         mediaPlayerHelper.releaseMediaPlayer() // MediaPlayerをリリース
         _selectedBlock.value = null  // 選択したブロックをリセット
+        _isCorrectOrder.value = null // 正解、不正解をリセット
+    }
+
+
+    private val _showDialog = MutableStateFlow(false)
+
+    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow() // ダイアログ表示の状態を管理
+
+    // やめるボタンを押した時に呼び出されるメソッド
+    fun toggleDialog(show: Boolean) {
+        _showDialog.value = show
     }
 }

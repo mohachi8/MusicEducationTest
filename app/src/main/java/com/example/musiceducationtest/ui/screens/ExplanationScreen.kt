@@ -2,6 +2,7 @@ package com.example.musiceducationtest.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -17,7 +18,11 @@ import com.example.musiceducationtest.viewmodel.LessonViewModel
 fun ExplanationScreen(lessonViewModel: LessonViewModel) {
     val lesson by lessonViewModel.selectedLesson.collectAsState()
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
         // それぞれのレッスンに対応した説明を表示
         Text(text = lesson?.description ?: "説明なし", fontSize = 20.sp)
 

@@ -3,6 +3,8 @@ package com.example.musiceducationtest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
@@ -61,7 +63,33 @@ class MainActivity : ComponentActivity() {
                             Modifier.padding(innerPadding)
                         ) {
                             // 問題選択画面
-                            composable("lessonSelectionScreen") {
+                            composable(
+                                route = "lessonSelectionScreen",
+                                enterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                exitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popEnterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popExitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                }
+                            ) {
                                 LessonSelectionScreen(
                                     navController,
                                     lessonViewModel,
@@ -69,11 +97,63 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             // 問題説明画面
-                            composable("explanationScreen") {
+                            composable(
+                                route = "explanationScreen",
+                                enterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                exitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popEnterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popExitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                }
+                            ) {
                                 ExplanationScreen(lessonViewModel)
                             }
                             // 学習画面
-                            composable("songCompositionScreen") {
+                            composable(
+                                route = "songCompositionScreen",
+                                enterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                exitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popEnterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popExitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                }
+                            ) {
                                 SongCompositionScreen(lessonViewModel, songCompositionViewModel)
                             }
                         }

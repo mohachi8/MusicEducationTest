@@ -1,5 +1,6 @@
 package com.example.musiceducationtest.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -11,6 +12,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.components.LessonBox
+import com.example.musiceducationtest.ui.theme.Purple200
 import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
@@ -18,7 +20,11 @@ import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 fun LessonSelectionScreen(navController: NavController,lessonViewModel: LessonViewModel,songCompositionViewModel: SongCompositionViewModel) {
     val lessons = lessonViewModel.allLessons // 全てのレッスンを取得
 
-    Column() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Purple200.copy(alpha = 0.1f))
+    ) {
         Spacer(modifier = Modifier.height(100.dp))
         LazyVerticalGrid(
             columns = GridCells.Adaptive(250.dp),

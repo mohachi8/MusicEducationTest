@@ -2,7 +2,6 @@ package com.example.musiceducationtest.repository
 
 import com.example.musiceducationtest.R
 import com.example.musiceducationtest.model.BlockDataModel
-import com.example.musiceducationtest.model.BlockType
 import com.example.musiceducationtest.model.LessonDataModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +29,20 @@ class LessonRepository @Inject constructor() {
                 BlockDataModel.BLOCK11T,
                 BlockDataModel.BLOCK12T
             ),
-            answers = listOf("Answer1", "Answer2")
+            answers = listOf(
+                BlockDataModel.BLOCK01T,
+                BlockDataModel.BLOCK02T,
+                BlockDataModel.BLOCK03T,
+                BlockDataModel.BLOCK04T,
+                BlockDataModel.BLOCK05T,
+                BlockDataModel.BLOCK06T,
+                BlockDataModel.BLOCK07T,
+                BlockDataModel.BLOCK08T,
+                BlockDataModel.BLOCK09T,
+                BlockDataModel.BLOCK10T,
+                BlockDataModel.BLOCK11T,
+                BlockDataModel.BLOCK12T
+            )
         ),
         LessonDataModel(
             id = "2",
@@ -48,7 +60,16 @@ class LessonRepository @Inject constructor() {
                 BlockDataModel.BLOCK07S,
                 BlockDataModel.BLOCK08S,
             ),
-            answers = listOf("Answer3", "Answer4")
+            answers = listOf(
+                BlockDataModel.BLOCK01S,
+                BlockDataModel.BLOCK02S,
+                BlockDataModel.BLOCK03S,
+                BlockDataModel.BLOCK04S,
+                BlockDataModel.BLOCK05S,
+                BlockDataModel.BLOCK06S,
+                BlockDataModel.BLOCK07S,
+                BlockDataModel.BLOCK08S,
+            )
         )
 
         // 他のレッスンを追加...
