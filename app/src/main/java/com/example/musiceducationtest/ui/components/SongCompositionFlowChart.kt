@@ -17,11 +17,13 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -32,13 +34,15 @@ import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 @Composable
 fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel) {
     val flowChartBlocks by songCompositionViewModel.flowChartBlocks.collectAsState()
-
+    val isPlaying by songCompositionViewModel.isPlaying.collectAsState()
+    val selectedBlock by songCompositionViewModel.selectedBlock.collectAsState()
     // flowChartBlocksを使って各ブロックの画像を表示
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         itemsIndexed(flowChartBlocks) { index, block ->
+            val isSelected = block == selectedBlock
             Box(
                 modifier = Modifier
                     .padding(5.dp)
@@ -56,6 +60,18 @@ fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel)
                     painter = painterResource(id = block.imageResId),
                     contentDescription = "Block Image",
                 )
+                // 選択されたブロックが再生中の時にアイコンを表示
+                if (isPlaying && isSelected) {
+                    Icon(
+                        imageVector = Icons.Default.PlayCircle,
+                        contentDescription = "再生中",
+                        tint = Purple200,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(80.dp)
+                            .alpha(0.8f)
+                    )
+                }
             }
             Icon(
                 imageVector = Icons.Default.PlayArrow,

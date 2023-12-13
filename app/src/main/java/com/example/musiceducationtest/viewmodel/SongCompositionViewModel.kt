@@ -43,14 +43,18 @@ class SongCompositionViewModel @Inject constructor(
     // 選択したブロックをフローチャートに追加
     fun addToFlowChart() {
         selectedBlock.value?.let { block ->
-            if (block != _firstFlowChartBlock.value) {
-                // 選択されているブロックが firstFlowChartBlock と異なる場合のみ追加
+            // ブロックがフローチャートに既に存在しないか確認、フローチャートの最初のブロックではないかを確認
+            if (!_flowChartBlocks.value.contains(block) && block != _firstFlowChartBlock.value) {
                 _flowChartBlocks.value = _flowChartBlocks.value + block
             }
         }
+        mediaPlayerHelper.togglePlayPause(isPlaying = true)
+        _isPlaying.value = false
+        _isPlayingFlowChart.value = false
+        _selectedBlock.value = null
     }
 
-    // クリックしたブロックを選択
+    // 選択肢ブロックを選択
     fun selectBlock(block: BlockDataModel) {
         _selectedBlock.value = block
     }
@@ -85,9 +89,9 @@ class SongCompositionViewModel @Inject constructor(
         if (index < blocks.size) {
             val block = blocks[index]
             mediaPlayerHelper.initializeMediaPlayer(block.musicResId)
-            mediaPlayerHelper.setOnCompletionListener {
+            mediaPlayerHelper.setOnCompletionListener { // 再生が終了した後の処理
                 if (index + 1 < blocks.size) {
-                    playMusicSequence(blocks, index + 1)
+                    playMusicSequence(blocks, index + 1) // 次の曲を再生
                 } else {
                     _isPlayingFlowChart.value = false
                 }

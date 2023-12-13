@@ -42,7 +42,9 @@ fun ControlButtons(
         Spacer(modifier = Modifier.width(20.dp))
 
         // 「えらぶ」ボタン
-        Button(onClick = { songCompositionViewModel.addToFlowChart() }) {
+        Button(onClick = {
+            songCompositionViewModel.addToFlowChart()
+        }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(5.dp)
@@ -63,7 +65,9 @@ fun ControlButtons(
         Spacer(modifier = Modifier.width(20.dp))
 
         // 「もどす」ボタン
-        Button(onClick = { songCompositionViewModel.removeFromFlowChart() }) {
+        Button(onClick = {
+            songCompositionViewModel.removeFromFlowChart()
+        }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(5.dp)
@@ -84,7 +88,9 @@ fun ControlButtons(
 
         // 「クリア」ボタン
         Button(
-            onClick = { songCompositionViewModel.initializeFlowChart(lesson?.id ?: "") },
+            onClick = {
+                songCompositionViewModel.initializeFlowChart(lesson?.id ?: "")
+            },
             colors = ButtonDefaults.buttonColors(Color.Red)
         ) {
             Row(

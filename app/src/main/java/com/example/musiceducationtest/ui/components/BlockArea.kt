@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.musiceducationtest.ui.theme.Purple200
@@ -38,6 +39,7 @@ fun BlockArea(
     val lesson by lessonViewModel.selectedLesson.collectAsState()
     val selectedBlock by songCompositionViewModel.selectedBlock.collectAsState()
     val isPlaying by songCompositionViewModel.isPlaying.collectAsState()
+    val flowChartBlocks by songCompositionViewModel.flowChartBlocks.collectAsState()
 
     // 選択されたレッスンの flowChartBlocks が null でないことを確認
     lesson?.flowChartBlocks?.let { blocks ->
@@ -49,26 +51,31 @@ fun BlockArea(
             items(blocks.size) { index ->
                 val block = blocks[index]
                 val isSelected = block == selectedBlock
+                val isBlockAdded = flowChartBlocks.contains(block)
                 Box(
                     modifier = Modifier
                         .padding(5.dp)
                         .width(110.dp)
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(4.dp))
-                        .clickable {
-                            songCompositionViewModel.selectBlock(block)
-                            songCompositionViewModel.playBlockMusic(block.musicResId)
-                        }
+                        .clickable(
+                            enabled = !isBlockAdded,
+                            onClick = {
+                                songCompositionViewModel.selectBlock(block)
+                                songCompositionViewModel.playBlockMusic(block.musicResId)
+                            }
+                        )
                         // ブロックが選択されているときに枠を表示
                         .border(
-                            width = if (isSelected) 4.dp else 0.dp,
-                            color = if (isSelected) Purple500 else Color.Transparent,
+                            width = if (isSelected && !isBlockAdded) 4.dp else 0.dp,
+                            color = if (isSelected && !isBlockAdded) Purple500 else Color.Transparent,
                             shape = RoundedCornerShape(4.dp)
                         )
                 ) {
                     Image(
                         painter = painterResource(id = block.imageResId),
-                        contentDescription = block.id
+                        contentDescription = block.id,
+                        modifier = Modifier.alpha(if (isBlockAdded) 0.2f else 1f)
                     )
                     // 選択されたブロックが再生中の時にアイコンを表示
                     if (isPlaying && isSelected) {
