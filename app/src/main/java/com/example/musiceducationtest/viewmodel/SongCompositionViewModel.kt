@@ -20,17 +20,21 @@ class SongCompositionViewModel @Inject constructor(
     private var currentlyPlayingMusic: Int? = null // 現在再生中の曲
     private val _firstFlowChartBlock = MutableStateFlow<BlockDataModel?>(null)
     private val _selectedBlock = MutableStateFlow<BlockDataModel?>(null)
-    private val _flowChartBlocks = MutableStateFlow<List<BlockDataModel>>(emptyList())
     private val _isPlaying = MutableStateFlow(false)
     private val _isPlayingFlowChart = MutableStateFlow(false)
+    private val _flowChartBlocks = MutableStateFlow<List<BlockDataModel>>(emptyList())
+    private val _showDialog = MutableStateFlow(false)
+    private val _isCorrectOrder = MutableStateFlow<Boolean?>(null)
 
     val selectedBlock: StateFlow<BlockDataModel?> = _selectedBlock
     val isPlaying: StateFlow<Boolean> = _isPlaying // 再生しているかどうかを保持
     val isPlayingFlowChart: StateFlow<Boolean> = _isPlayingFlowChart // 再生しているかどうかを保持
     val flowChartBlocks: StateFlow<List<BlockDataModel>> = _flowChartBlocks
-
-    private val _isCorrectOrder = MutableStateFlow<Boolean?>(null)
+    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow() // ダイアログ表示の状態を管理
     val isCorrectOrder: StateFlow<Boolean?> = _isCorrectOrder
+
+    private val _currentlyPlayingBlock = MutableStateFlow<BlockDataModel?>(null)
+    val currentlyPlayingBlock: StateFlow<BlockDataModel?> = _currentlyPlayingBlock.asStateFlow()
 
     fun checkAnswer(lessonId: String) {
         val lesson = lessonRepository.getLessonById(lessonId)
@@ -87,6 +91,7 @@ class SongCompositionViewModel @Inject constructor(
             mediaPlayerHelper.releaseMediaPlayer() // MediaPlayerをリリース
             _isPlaying.value = false
             _isPlayingFlowChart.value = false
+            _currentlyPlayingBlock.value = null
         } else {
             // まだ再生していない場合は、フローチャートの音楽を再生開始
             val blocks = _flowChartBlocks.value
@@ -101,17 +106,20 @@ class SongCompositionViewModel @Inject constructor(
     private fun playMusicSequence(blocks: List<BlockDataModel>, index: Int) {
         if (index < blocks.size) {
             val block = blocks[index]
+            _currentlyPlayingBlock.value = block
             mediaPlayerHelper.initializeMediaPlayer(block.musicResId)
             mediaPlayerHelper.setOnCompletionListener { // 再生が終了した後の処理
                 if (index + 1 < blocks.size) {
                     playMusicSequence(blocks, index + 1) // 次の曲を再生
                 } else {
                     _isPlayingFlowChart.value = false
+                    _currentlyPlayingBlock.value = null
                 }
             }
             mediaPlayerHelper.togglePlayPause(isPlaying = false)
         } else {
             _isPlayingFlowChart.value = false
+            _currentlyPlayingBlock.value = null
         }
     }
 
@@ -138,11 +146,6 @@ class SongCompositionViewModel @Inject constructor(
         _selectedBlock.value = null  // 選択したブロックをリセット
         _isCorrectOrder.value = null // 正解、不正解をリセット
     }
-
-
-    private val _showDialog = MutableStateFlow(false)
-
-    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow() // ダイアログ表示の状態を管理
 
     // やめるボタンを押した時に呼び出されるメソッド
     fun toggleDialog(show: Boolean) {

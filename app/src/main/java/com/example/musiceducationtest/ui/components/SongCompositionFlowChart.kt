@@ -36,13 +36,15 @@ fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel)
     val flowChartBlocks by songCompositionViewModel.flowChartBlocks.collectAsState()
     val isPlaying by songCompositionViewModel.isPlaying.collectAsState()
     val selectedBlock by songCompositionViewModel.selectedBlock.collectAsState()
-    // flowChartBlocksを使って各ブロックの画像を表示
+    val currentlyPlayingBlock by songCompositionViewModel.currentlyPlayingBlock.collectAsState()
+
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         itemsIndexed(flowChartBlocks) { index, block ->
             val isSelected = block == selectedBlock
+            val currentlyPlaying = block == currentlyPlayingBlock
             Box(
                 modifier = Modifier
                     .padding(5.dp)
@@ -61,7 +63,7 @@ fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel)
                     contentDescription = "Block Image",
                 )
                 // 選択されたブロックが再生中の時にアイコンを表示
-                if (isPlaying && isSelected) {
+                if ((isPlaying && isSelected) || currentlyPlaying) {
                     Icon(
                         imageVector = Icons.Default.PlayCircle,
                         contentDescription = "再生中",
