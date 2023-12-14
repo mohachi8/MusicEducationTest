@@ -54,7 +54,9 @@ fun SongCompositionFlowChart(songCompositionViewModel: SongCompositionViewModel)
                     .background(Purple200)
                     .clickable { // 押されたら音を再生
                         songCompositionViewModel.selectBlock(block)
-                        songCompositionViewModel.playBlockMusic(block.musicResId)
+                        block.musicResId?.let { musicResId ->
+                            songCompositionViewModel.playBlockMusic(musicResId)
+                        }
                     },
                 contentAlignment = Alignment.Center
             ) {

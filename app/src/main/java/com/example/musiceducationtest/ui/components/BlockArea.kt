@@ -61,7 +61,9 @@ fun BlockArea(
                             enabled = !isBlockAdded,
                             onClick = {
                                 songCompositionViewModel.selectBlock(block)
-                                songCompositionViewModel.playBlockMusic(block.musicResId)
+                                block.musicResId?.let { musicResId ->
+                                    songCompositionViewModel.playBlockMusic(musicResId)
+                                }
                             }
                         )
                         // ブロックが選択されているときに枠を表示

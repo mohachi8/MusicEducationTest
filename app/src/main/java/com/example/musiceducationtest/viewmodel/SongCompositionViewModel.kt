@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.musiceducationtest.helper.MediaPlayerHelper
 import com.example.musiceducationtest.model.BlockDataModel
+import com.example.musiceducationtest.model.BlockType
 import com.example.musiceducationtest.repository.LessonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,7 @@ class SongCompositionViewModel @Inject constructor(
     private val _flowChartBlocks = MutableStateFlow<List<BlockDataModel>>(emptyList())
     private val _showDialog = MutableStateFlow(false)
     private val _isCorrectOrder = MutableStateFlow<Boolean?>(null)
+    private val _currentlyPlayingBlock = MutableStateFlow<BlockDataModel?>(null)
 
     val selectedBlock: StateFlow<BlockDataModel?> = _selectedBlock
     val isPlaying: StateFlow<Boolean> = _isPlaying // 再生しているかどうかを保持
@@ -32,8 +34,6 @@ class SongCompositionViewModel @Inject constructor(
     val flowChartBlocks: StateFlow<List<BlockDataModel>> = _flowChartBlocks
     val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow() // ダイアログ表示の状態を管理
     val isCorrectOrder: StateFlow<Boolean?> = _isCorrectOrder
-
-    private val _currentlyPlayingBlock = MutableStateFlow<BlockDataModel?>(null)
     val currentlyPlayingBlock: StateFlow<BlockDataModel?> = _currentlyPlayingBlock.asStateFlow()
 
     fun checkAnswer(lessonId: String) {
@@ -89,7 +89,6 @@ class SongCompositionViewModel @Inject constructor(
         if (_isPlayingFlowChart.value) {
             // 既に再生中の場合は再生を停止
             mediaPlayerHelper.releaseMediaPlayer() // MediaPlayerをリリース
-            _isPlaying.value = false
             _isPlayingFlowChart.value = false
             _currentlyPlayingBlock.value = null
         } else {
@@ -98,30 +97,70 @@ class SongCompositionViewModel @Inject constructor(
             if (blocks.isNotEmpty()) {
                 playMusicSequence(blocks, 0)
                 _isPlayingFlowChart.value = true
+                _isPlaying.value = false
+                _selectedBlock.value = null
             }
         }
     }
 
-    // フローチャートの音楽を組み立てるメソッド
     private fun playMusicSequence(blocks: List<BlockDataModel>, index: Int) {
         if (index < blocks.size) {
             val block = blocks[index]
-            _currentlyPlayingBlock.value = block
-            mediaPlayerHelper.initializeMediaPlayer(block.musicResId)
-            mediaPlayerHelper.setOnCompletionListener { // 再生が終了した後の処理
-                if (index + 1 < blocks.size) {
-                    playMusicSequence(blocks, index + 1) // 次の曲を再生
-                } else {
-                    _isPlayingFlowChart.value = false
-                    _currentlyPlayingBlock.value = null
+            when (block.type) {
+                BlockType.REPEAT_START -> {
+                    val endIndex = findRepeatEndIndex(blocks, index)
+                    val repeatBlocks = blocks.subList(index + 1, endIndex)
+                    playRepeatSequence(repeatBlocks, 0, 2) {
+                        playMusicSequence(blocks, endIndex + 1)
+                    }
+                }
+
+                else -> {
+                    _currentlyPlayingBlock.value = block
+                    playBlock(block) {
+                        playMusicSequence(blocks, index + 1)
+                    }
                 }
             }
-            mediaPlayerHelper.togglePlayPause(isPlaying = false)
         } else {
             _isPlayingFlowChart.value = false
             _currentlyPlayingBlock.value = null
         }
     }
+
+    private fun playBlock(block: BlockDataModel, onCompletion: () -> Unit) {
+        block.musicResId?.let { musicResId ->
+            mediaPlayerHelper.initializeMediaPlayer(musicResId)
+        }
+        mediaPlayerHelper.setOnCompletionListener {
+            onCompletion()
+        }
+        mediaPlayerHelper.togglePlayPause(isPlaying = false)
+    }
+
+    private fun playRepeatSequence(
+        repeatBlocks: List<BlockDataModel>,
+        index: Int,
+        repeatCount: Int,
+        onCompletion: () -> Unit
+    ) {
+        if (index < repeatBlocks.size * repeatCount) {
+            val actualIndex = index % repeatBlocks.size
+            val block = repeatBlocks[actualIndex]
+            _currentlyPlayingBlock.value = block
+            playBlock(block) {
+                playRepeatSequence(repeatBlocks, index + 1, repeatCount, onCompletion)
+            }
+        } else {
+            onCompletion()
+        }
+    }
+
+    private fun findRepeatEndIndex(blocks: List<BlockDataModel>, startIndex: Int): Int {
+        return blocks.subList(startIndex + 1, blocks.size)
+            .indexOfFirst { it.type == BlockType.REPEAT_END } + startIndex + 1
+    }
+
 
     // 選択肢ブロックの音楽を再生するメソッド
     fun playBlockMusic(musicResId: Int) {
@@ -136,6 +175,8 @@ class SongCompositionViewModel @Inject constructor(
             mediaPlayerHelper.togglePlayPause(isPlaying = false) // 再生開始
             currentlyPlayingMusic = musicResId // 現在再生中のブロックに更新
             _isPlaying.value = true // 再生状態にする
+            _isPlayingFlowChart.value = false
+            _currentlyPlayingBlock.value = null
             mediaPlayerHelper.setOnCompletionListener { _isPlaying.value = false } // 再生が終了したら停止状態
         }
     }

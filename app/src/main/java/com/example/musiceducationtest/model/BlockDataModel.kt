@@ -6,8 +6,11 @@ enum class BlockDataModel(
     val id: String,
     val type: BlockType,
     val imageResId: Int,
-    val musicResId: Int
+    val musicResId: Int?
 ) {
+    REPEAT_START("repeatStart", BlockType.REPEAT_START, R.drawable.repeat_start, null),
+    REPEAT_END("repeatEnd", BlockType.REPEAT_END, R.drawable.repeat_end, null),
+
     BLOCK01T_T("block01t", BlockType.MUSIC, R.drawable.ttls_01, R.raw.ttls_01),
     BLOCK02T_T("block02t", BlockType.MUSIC, R.drawable.ttls_02, R.raw.ttls_02),
     BLOCK03T_T("block03t", BlockType.MUSIC, R.drawable.ttls_03, R.raw.ttls_03),
