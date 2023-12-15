@@ -1,6 +1,5 @@
 package com.example.musiceducationtest.ui.components
 
-import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.musiceducationtest.ui.theme.Purple500
 import com.example.musiceducationtest.viewmodel.MusicPlayerViewModel
@@ -26,7 +24,6 @@ fun MusicPlayer(viewModel: MusicPlayerViewModel) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .requiredWidthIn(min = 300.dp)
             .fillMaxWidth(0.4f)
             .height(70.dp)
             .padding(start = 10.dp, end = 20.dp)
@@ -53,11 +50,4 @@ fun MusicPlayer(viewModel: MusicPlayerViewModel) {
             onValueChangeFinished = viewModel::onSliderValueChangeFinished
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MusicPlayerPreview() {
-    val dummyViewModel = MusicPlayerViewModel(application = Application())
-    MusicPlayer(viewModel = dummyViewModel)
 }

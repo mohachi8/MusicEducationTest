@@ -149,10 +149,35 @@ class LessonRepository @Inject constructor() {
     // 選択されたレッスンを取得するメソッド
     fun getLessonById(id: String): LessonDataModel? {
         return lessons.find { it.id == id }?.apply {
-            // flowChartBlocks の順序をランダムにする
+            val repeatStartExists = BlockDataModel.REPEAT_START in flowChartBlocks
+            val repeatEndExists = BlockDataModel.REPEAT_END in flowChartBlocks
+            // REPEAT_START と REPEAT_END の位置を取得
+            val repeatStartIndex = if (repeatStartExists) flowChartBlocks.indexOf(BlockDataModel.REPEAT_START) else -1
+            val repeatEndIndex = if (repeatEndExists) flowChartBlocks.indexOf(BlockDataModel.REPEAT_END) else -1
+
+            // これらの要素を一時的にリストから削除
+            flowChartBlocks = flowChartBlocks.filterNot {
+                it == BlockDataModel.REPEAT_START || it == BlockDataModel.REPEAT_END
+            }
+
+            // リストをシャッフル
             flowChartBlocks = flowChartBlocks.shuffled()
+
+            // REPEAT_START と REPEAT_END を元の位置に戻す
+            if (repeatStartExists) {
+                flowChartBlocks = flowChartBlocks.toMutableList().apply {
+                    add(repeatStartIndex, BlockDataModel.REPEAT_START)
+                }
+            }
+            if (repeatEndExists) {
+                flowChartBlocks = flowChartBlocks.toMutableList().apply {
+                    add(repeatEndIndex, BlockDataModel.REPEAT_END)
+                }
+            }
         }
     }
+
+
 
     // 全種類のレッスンを取得するためのメソッド
     fun getAllLessons(): List<LessonDataModel> {

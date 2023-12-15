@@ -54,14 +54,28 @@ class SongCompositionViewModel @Inject constructor(
             val initialBlocks = listOf(lesson.firstFlowChartBlock)// + lesson.flowChartBlocks
             _flowChartBlocks.value = initialBlocks
         }
+        mediaPlayerHelper.togglePlayPause(isPlaying = true)
+        _isPlaying.value = false
+        _isPlayingFlowChart.value = false
+        _selectedBlock.value = null
+        _currentlyPlayingBlock.value = null
     }
 
 
     // 選択したブロックをフローチャートに追加
     fun addToFlowChart() {
         selectedBlock.value?.let { block ->
-            // ブロックがフローチャートに既に存在しないか確認、フローチャートの最初のブロックではないかを確認
-            if (!_flowChartBlocks.value.contains(block) && block != _firstFlowChartBlock.value) {
+            // ブロックがフローチャートに既に存在しないことを確認
+            val isNotAlreadyInChart = !_flowChartBlocks.value.contains(block)
+
+            // フローチャートの最初のブロックではないことを確認
+            val isNotFirstBlock = block != _firstFlowChartBlock.value
+
+            // REPEAT_END を追加する場合、REPEAT_START が既にリストに存在するか確認
+            val isRepeatEndValid = block.type != BlockType.REPEAT_END ||
+                    _flowChartBlocks.value.any { it.type == BlockType.REPEAT_START }
+
+            if (isNotAlreadyInChart && isNotFirstBlock && isRepeatEndValid) {
                 _flowChartBlocks.value = _flowChartBlocks.value + block
             }
         }
@@ -69,7 +83,9 @@ class SongCompositionViewModel @Inject constructor(
         _isPlaying.value = false
         _isPlayingFlowChart.value = false
         _selectedBlock.value = null
+        _currentlyPlayingBlock.value = null
     }
+
 
     // 選択肢ブロックを選択
     fun selectBlock(block: BlockDataModel) {
@@ -82,6 +98,11 @@ class SongCompositionViewModel @Inject constructor(
             // リストに2つ以上の要素がある場合のみ、最後の要素を削除
             _flowChartBlocks.value = _flowChartBlocks.value.dropLast(1)
         }
+        mediaPlayerHelper.togglePlayPause(isPlaying = true)
+        _isPlaying.value = false
+        _isPlayingFlowChart.value = false
+        _selectedBlock.value = null
+        _currentlyPlayingBlock.value = null
     }
 
     // フローチャートの再生ボタンが押された時の処理
