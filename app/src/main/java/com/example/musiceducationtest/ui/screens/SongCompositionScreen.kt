@@ -24,7 +24,7 @@ fun SongCompositionScreen(
 ) {
     Column(modifier = Modifier.padding(horizontal = 10.dp)) {
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(10.dp))
 
         // フローチャート表示エリア
         Row(
@@ -36,7 +36,7 @@ fun SongCompositionScreen(
                 .border(width = 2.dp, color = Color(0xFF424242), shape = RoundedCornerShape(4.dp))
                 .padding(10.dp)
         ) {
-
+/*
             // 「曲を再生」ボタン
             FlowChartMusicStartButton(songCompositionViewModel)
 
@@ -51,6 +51,8 @@ fun SongCompositionScreen(
             )
             Spacer(modifier = Modifier.width(10.dp))
 
+
+ */
             // フローチャート
             SongCompositionFlowChart(songCompositionViewModel)
         }
@@ -75,6 +77,6 @@ fun SongCompositionScreen(
             BlockArea(lessonViewModel, songCompositionViewModel)
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }

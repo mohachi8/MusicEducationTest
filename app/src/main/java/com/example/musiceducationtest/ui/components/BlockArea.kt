@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayCircle
@@ -27,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.musiceducationtest.ui.theme.Purple200
 import com.example.musiceducationtest.ui.theme.Purple500
+import com.example.musiceducationtest.ui.theme.Shapes
 import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 
@@ -42,8 +41,8 @@ fun BlockArea(
 
     // 選択されたレッスンの flowChartBlocks が null でないことを確認
     lesson?.flowChartBlocks?.let { blocks ->
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(120.dp),
+        LazyRow(
+            //columns = GridCells.Adaptive(120.dp),
             modifier = Modifier
                 .fillMaxWidth()
         ) {
@@ -56,7 +55,7 @@ fun BlockArea(
                         .padding(5.dp)
                         .width(110.dp)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(Shapes.small)
                         .clickable(
                             enabled = !isBlockAdded,
                             onClick = {
@@ -68,9 +67,11 @@ fun BlockArea(
                         )
                         // ブロックが選択されているときに枠を表示
                         .border(
-                            width = if (isSelected && !isBlockAdded) 4.dp else 0.dp,
-                            color = if (isSelected && !isBlockAdded) Purple500 else Color.Transparent,
-                            shape = RoundedCornerShape(4.dp)
+                            width = if (isSelected && !isBlockAdded) 4.dp else 1.dp,
+                            color = if (isSelected && !isBlockAdded) Purple500
+                            else if (!isBlockAdded) Color(0xFF424242)
+                            else Color.Transparent,
+                            shape = Shapes.small
                         )
                 ) {
                     Image(

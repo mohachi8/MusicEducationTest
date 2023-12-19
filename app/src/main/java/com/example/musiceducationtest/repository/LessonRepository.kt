@@ -92,26 +92,26 @@ class LessonRepository @Inject constructor() {
                 BlockDataModel.BLOCK04T,
                 BlockDataModel.BLOCK05T,
                 BlockDataModel.BLOCK06T,
-                BlockDataModel.BLOCK07T,
-                BlockDataModel.BLOCK08T,
                 BlockDataModel.BLOCK09T,
                 BlockDataModel.BLOCK10T,
                 BlockDataModel.BLOCK11T,
-                BlockDataModel.BLOCK12T
+                BlockDataModel.BLOCK12T,
+                BlockDataModel.REPEAT_START,
+                BlockDataModel.REPEAT_END
             ),
             answers = listOf(
                 BlockDataModel.BLOCK01T,
                 BlockDataModel.BLOCK02T,
                 BlockDataModel.BLOCK03T,
                 BlockDataModel.BLOCK04T,
+                BlockDataModel.REPEAT_START,
                 BlockDataModel.BLOCK05T,
                 BlockDataModel.BLOCK06T,
-                BlockDataModel.BLOCK07T,
-                BlockDataModel.BLOCK08T,
+                BlockDataModel.REPEAT_END,
                 BlockDataModel.BLOCK09T,
                 BlockDataModel.BLOCK10T,
                 BlockDataModel.BLOCK11T,
-                BlockDataModel.BLOCK12T
+                BlockDataModel.BLOCK12T,
             )
         ),
         LessonDataModel(
@@ -152,8 +152,10 @@ class LessonRepository @Inject constructor() {
             val repeatStartExists = BlockDataModel.REPEAT_START in flowChartBlocks
             val repeatEndExists = BlockDataModel.REPEAT_END in flowChartBlocks
             // REPEAT_START と REPEAT_END の位置を取得
-            val repeatStartIndex = if (repeatStartExists) flowChartBlocks.indexOf(BlockDataModel.REPEAT_START) else -1
-            val repeatEndIndex = if (repeatEndExists) flowChartBlocks.indexOf(BlockDataModel.REPEAT_END) else -1
+            val repeatStartIndex =
+                if (repeatStartExists) flowChartBlocks.indexOf(BlockDataModel.REPEAT_START) else -1
+            val repeatEndIndex =
+                if (repeatEndExists) flowChartBlocks.indexOf(BlockDataModel.REPEAT_END) else -1
 
             // これらの要素を一時的にリストから削除
             flowChartBlocks = flowChartBlocks.filterNot {
@@ -176,7 +178,6 @@ class LessonRepository @Inject constructor() {
             }
         }
     }
-
 
 
     // 全種類のレッスンを取得するためのメソッド
