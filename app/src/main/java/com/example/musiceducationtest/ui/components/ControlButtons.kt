@@ -1,7 +1,11 @@
 package com.example.musiceducationtest.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.AlertDialog
@@ -84,15 +88,20 @@ fun ControlButtons(
     }
 
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        //verticalAlignment = Alignment.CenterVertically
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.height(320.dp)
     ) {
-        Text(
-            text = "ブロック エリア",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.ExtraBold,
-        )
-        Spacer(modifier = Modifier.width(20.dp))
+//        Text(
+//            text = "ブロック エリア",
+//            fontSize = 20.sp,
+//            fontWeight = FontWeight.ExtraBold,
+//        )
+//        Spacer(modifier = Modifier.width(20.dp))
+        FlowChartMusicStartButton(songCompositionViewModel)
+
 
         // 「えらぶ」ボタン
         Button(onClick = {
@@ -115,7 +124,7 @@ fun ControlButtons(
             }
         }
 
-        Spacer(modifier = Modifier.width(20.dp))
+        //Spacer(modifier = Modifier.width(20.dp))
 
         // 「もどす」ボタン
         Button(onClick = {
@@ -137,7 +146,7 @@ fun ControlButtons(
                 )
             }
         }
-        Spacer(modifier = Modifier.width(20.dp))
+        //Spacer(modifier = Modifier.width(20.dp))
 
         // 「クリア」ボタン
         Button(
@@ -165,7 +174,8 @@ fun ControlButtons(
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        //Spacer(modifier = Modifier.weight(1f))
+        //Spacer(modifier = Modifier.width(20.dp))
 
         // 「答えあわせ」ボタン
         Button(

@@ -40,18 +40,37 @@ import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 fun FlowChartMusicStartButton(songCompositionViewModel: SongCompositionViewModel) {
     val isPlaying = songCompositionViewModel.isPlayingFlowChart.collectAsState().value
 
-    Box(modifier = Modifier
-        .padding(5.dp)
-        .size(110.dp,110.dp)
-        .clip(Shapes.small)
-        .clickable { songCompositionViewModel.startFlowChartMusic() }
-        .background(Purple200)
-        .border(
-            width = 4.dp,
-            color = Purple500,
-            shape = Shapes.small
-        )
-    ){
+    Box(
+        modifier = Modifier
+//            .padding(5.dp)
+//            .size(110.dp, 110.dp)
+//            .clip(Shapes.small)
+            .clickable { songCompositionViewModel.startFlowChartMusic() }
+//            .background(Purple500)
+//            .border(
+//                width = 4.dp,
+//                color = Purple200,
+//                shape = Shapes.small
+//            ),
+        ,contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(
+                imageVector = if (isPlaying) Icons.Default.StopCircle else Icons.Default.PlayCircle,
+                contentDescription = "再生",
+                modifier = Modifier.size(40.dp),
+                tint = Purple500
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = if (isPlaying) "曲を停止" else "曲を再生",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        }
+
+        /*
         Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.weight(1f))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -76,6 +95,8 @@ fun FlowChartMusicStartButton(songCompositionViewModel: SongCompositionViewModel
                 modifier = Modifier.height(110.dp)
             )
         }
+
+         */
     }
 
     /*

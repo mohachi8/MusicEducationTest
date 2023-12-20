@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayCircle
@@ -41,8 +43,8 @@ fun BlockArea(
 
     // 選択されたレッスンの flowChartBlocks が null でないことを確認
     lesson?.flowChartBlocks?.let { blocks ->
-        LazyRow(
-            //columns = GridCells.Adaptive(120.dp),
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(150.dp),
             modifier = Modifier
                 .fillMaxWidth()
         ) {
@@ -53,7 +55,7 @@ fun BlockArea(
                 Box(
                     modifier = Modifier
                         .padding(5.dp)
-                        .width(110.dp)
+                        .width(150.dp)
                         .aspectRatio(1f)
                         .clip(Shapes.small)
                         .clickable(
