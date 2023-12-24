@@ -27,7 +27,9 @@ class LessonRepository @Inject constructor() {
                 BlockDataModel.BLOCK09T_T,
                 BlockDataModel.BLOCK10T_T,
                 BlockDataModel.BLOCK11T_T,
-                BlockDataModel.BLOCK12T_T
+                BlockDataModel.BLOCK12T_T,
+                BlockDataModel.BLOCK01S,
+                BlockDataModel.BLOCK02S
             ),
             answers = listOf(
                 BlockDataModel.BLOCK01T_T,
@@ -77,6 +79,41 @@ class LessonRepository @Inject constructor() {
                 BlockDataModel.BLOCK10T_T,
                 BlockDataModel.BLOCK11T_T,
                 BlockDataModel.BLOCK12T_T
+            )
+        ),
+        LessonDataModel(
+            id = "0.3",
+            title = "レッスン0.3",
+            songTitle = "きらきら星（MIDI）",
+            description = "このレッスンでは「きらきら星」を題材にした学習を行います。",
+            musicResId = R.raw.twinkle_twinkle_little_star,
+            firstFlowChartBlock = BlockDataModel.BLOCK01T_M,
+            flowChartBlocks = listOf(
+                BlockDataModel.BLOCK02T_M,
+                BlockDataModel.BLOCK03T_M,
+                BlockDataModel.BLOCK04T_M,
+                BlockDataModel.BLOCK05T_M,
+                BlockDataModel.BLOCK06T_M,
+                BlockDataModel.BLOCK09T_M,
+                BlockDataModel.BLOCK10T_M,
+                BlockDataModel.BLOCK11T_M,
+                BlockDataModel.BLOCK12T_M,
+                BlockDataModel.REPEAT_START,
+                BlockDataModel.REPEAT_END
+            ),
+            answers = listOf(
+                BlockDataModel.BLOCK01T_M,
+                BlockDataModel.BLOCK02T_M,
+                BlockDataModel.BLOCK03T_M,
+                BlockDataModel.BLOCK04T_M,
+                BlockDataModel.REPEAT_START,
+                BlockDataModel.BLOCK05T_M,
+                BlockDataModel.BLOCK06T_M,
+                BlockDataModel.REPEAT_END,
+                BlockDataModel.BLOCK09T_M,
+                BlockDataModel.BLOCK10T_M,
+                BlockDataModel.BLOCK11T_M,
+                BlockDataModel.BLOCK12T_M,
             )
         ),
         LessonDataModel(

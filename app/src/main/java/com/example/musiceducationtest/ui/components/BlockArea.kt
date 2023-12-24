@@ -4,17 +4,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -69,12 +70,14 @@ fun BlockArea(
                         )
                         // ブロックが選択されているときに枠を表示
                         .border(
-                            width = if (isSelected && !isBlockAdded) 4.dp else 1.dp,
+                            width = if (isSelected && !isBlockAdded) 4.dp
+                            else if (!isBlockAdded) 1.dp
+                            else 0.1.dp,
                             color = if (isSelected && !isBlockAdded) Purple500
-                            else if (!isBlockAdded) Color(0xFF424242)
-                            else Color.Transparent,
+                            else Color(0xFF424242),
                             shape = Shapes.small
-                        )
+                        ),
+                    contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(id = block.imageResId),
@@ -83,15 +86,21 @@ fun BlockArea(
                     )
                     // 選択されたブロックが再生中の時にアイコンを表示
                     if (isPlaying && isSelected) {
-                        Icon(
-                            imageVector = Icons.Default.PlayCircle,
-                            contentDescription = "再生中",
-                            tint = Purple200,
+                        Box(
                             modifier = Modifier
-                                .align(Alignment.Center)
-                                .size(80.dp)
-                                .alpha(0.8f)
-                        )
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.BottomCenter
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Default.PlayArrow,
+                                    contentDescription = "再生中",
+                                    tint = Purple200,
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
