@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.StopCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +33,7 @@ fun SongCompositionScreen(
     lessonViewModel: LessonViewModel,
     songCompositionViewModel: SongCompositionViewModel
 ) {
+    val lesson by lessonViewModel.selectedLesson.collectAsState()
     val isPlaying =
         songCompositionViewModel.isPlayingFlowChart.collectAsState().value // フローチャートの曲が再生中かどうか
 
@@ -55,7 +57,7 @@ fun SongCompositionScreen(
             ) {
                 // ト音記号と拍子
                 Image(
-                    painter = painterResource(id = R.drawable.star_treble_clef),
+                    painter = painterResource(id = lesson?.beat ?: R.drawable.treble_clef_4_4),
                     contentDescription = "TrebleClef",
                     modifier = Modifier.height(160.dp)
                 )
@@ -81,6 +83,7 @@ fun SongCompositionScreen(
             FlowChart(songCompositionViewModel)
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
         // フローチャートと選択肢の間をめいいっぱい広げる
         Spacer(modifier = Modifier.weight(1f))
 
