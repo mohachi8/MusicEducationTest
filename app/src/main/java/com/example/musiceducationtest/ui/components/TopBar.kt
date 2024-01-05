@@ -37,17 +37,17 @@ fun TopBar(navController: NavController, lessonViewModel: LessonViewModel) {
 
         if (currentRoute != "lessonSelectionScreen") { // 問題選択画面では非表示
             Text(text = selectedLesson?.title ?: "レッスン0")
-            Spacer(modifier = Modifier.width(20.dp))
-            Text(text = selectedLesson?.songTitle ?: "曲が選択されていません。")
+//            Spacer(modifier = Modifier.width(20.dp))
+//            Text(text = selectedLesson?.songTitle ?: "曲が選択されていません。")
         }
     }
 }
 
 fun getTitleForRoute(route: String?): String {
     return when (route) {
-        "lessonSelectionScreen" -> "レッスンを えらんで 学習を スタート"
-        "explanationScreen" -> "曲を きいてください。"
-        "songCompositionScreen" -> "ブロックを ならびかえて もとの曲を さいげん しましょう。"
+        "lessonSelectionScreen" -> "レッスンを えらんで スタート"
+        "explanationScreen" -> "せつめい"
+        "songCompositionScreen" -> "しょうせつを ならびかえて もとの曲を さいげん しましょう。"
         else -> "エラー：画面が選択されていません。"
     }
 }

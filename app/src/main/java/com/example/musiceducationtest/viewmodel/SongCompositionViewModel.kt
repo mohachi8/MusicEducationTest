@@ -38,14 +38,14 @@ class SongCompositionViewModel @Inject constructor(
     val currentlyPlayingBlock: StateFlow<BlockDataModel?> = _currentlyPlayingBlock.asStateFlow()
     val previousBlock: StateFlow<BlockDataModel?> = _previousBlock.asStateFlow()
 
+    // 答えあわせ
     fun checkAnswer(lessonId: String) {
         val lesson = lessonRepository.getLessonById(lessonId)
-        val correctOrder = lesson?.answers
-        val currentOrder = _flowChartBlocks.value
+        val correctMusicResIds = lesson?.answers?.map { it.musicResId }
+        val currentMusicResIds = _flowChartBlocks.value.map { it.musicResId }
 
-        _isCorrectOrder.value = correctOrder?.equals(currentOrder) ?: false
+        _isCorrectOrder.value = correctMusicResIds == currentMusicResIds
     }
-
 
     // 選択されたレッスンに基づいてフローチャートを初期化
     fun initializeFlowChart(lessonId: String) {
@@ -132,6 +132,7 @@ class SongCompositionViewModel @Inject constructor(
         }
     }
 
+    // フローチャートの曲を再生
     private fun playMusicSequence(blocks: List<BlockDataModel>, index: Int) {
         if (index < blocks.size) {
             val block = blocks[index]

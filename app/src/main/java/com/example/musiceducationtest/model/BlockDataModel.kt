@@ -53,7 +53,18 @@ enum class BlockDataModel(
     BLOCK05S("block05s", BlockType.MUSIC, R.drawable.sea_05, R.raw.sea_05),
     BLOCK06S("block06s", BlockType.MUSIC, R.drawable.sea_06, R.raw.sea_06),
     BLOCK07S("block07s", BlockType.MUSIC, R.drawable.sea_07, R.raw.sea_07),
-    BLOCK08S("block08s", BlockType.MUSIC, R.drawable.sea_08, R.raw.sea_08), ;
+    BLOCK08S("block08s", BlockType.MUSIC, R.drawable.sea_08, R.raw.sea_08),
+
+    BLOCK01Sa("block01sa", BlockType.MUSIC, R.drawable.sakura_01, R.raw.sakura_01),
+    BLOCK011Sa("block01sa", BlockType.MUSIC, R.drawable.sakura_01, R.raw.sakura_01),
+    BLOCK012Sa("block01sa", BlockType.MUSIC, R.drawable.sakura_01, R.raw.sakura_01),
+    BLOCK013Sa("block01sa", BlockType.MUSIC, R.drawable.sakura_01, R.raw.sakura_01),
+    BLOCK02Sa("block02sa", BlockType.MUSIC, R.drawable.sakura_02, R.raw.sakura_02),
+    BLOCK03Sa("block03sa", BlockType.MUSIC, R.drawable.sakura_03, R.raw.sakura_03),
+    BLOCK04Sa("block04sa", BlockType.MUSIC, R.drawable.sakura_04, R.raw.sakura_04),
+    BLOCK05Sa("block05sa", BlockType.MUSIC, R.drawable.sakura_05, R.raw.sakura_05),
+    BLOCK06Sa("block06sa", BlockType.MUSIC, R.drawable.sakura_06, R.raw.sakura_06),
+    BLOCK07Sa("block07sa", BlockType.MUSIC, R.drawable.sakura_07, R.raw.sakura_07), ;
 }
 
 // ブロックのタイプ：音楽を再生するブロックか、繰り返し始めか、繰り返し終わりか

@@ -68,7 +68,7 @@ fun ControlButtons(
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "えらぶ",
-                    modifier = Modifier.size(30.dp)
+                    //modifier = Modifier.size(30.dp)
                 )
                 Text(
                     text = "えらぶ",
