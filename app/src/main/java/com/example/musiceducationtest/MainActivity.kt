@@ -8,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.musiceducationtest.ui.theme.MusicEducationTestTheme
 import androidx.navigation.compose.NavHost
@@ -18,6 +19,8 @@ import com.example.musiceducationtest.ui.components.BottomBar
 import com.example.musiceducationtest.ui.components.TopBar
 import com.example.musiceducationtest.ui.screens.ExplanationScreen
 import com.example.musiceducationtest.ui.screens.LessonSelectionScreen
+import com.example.musiceducationtest.ui.screens.LoginScreen
+import com.example.musiceducationtest.ui.screens.NewRegistrationScreen
 import com.example.musiceducationtest.ui.screens.SongCompositionScreen
 import com.example.musiceducationtest.viewmodel.BottomBarViewModel
 import com.example.musiceducationtest.viewmodel.LessonViewModel
@@ -44,9 +47,16 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Scaffold(
-                        topBar = { TopBar(navController, lessonViewModel) }, // トップバー
+                        topBar = {// トップバー
+//                            if (currentRoute != "loginScreen") {
+                            TopBar(navController, lessonViewModel)
+//                            }
+                        },
                         bottomBar = { // ボトムバー
-                            if (currentRoute != "lessonSelectionScreen") { // 問題選択画面では非表示
+                            if (currentRoute != "lessonSelectionScreen"
+                                && currentRoute != "loginScreen"
+                                && currentRoute != "newRegistrationScreen"
+                            ) { // 問題画面でのみ表示
                                 BottomBar(
                                     navController,
                                     lessonViewModel,
@@ -155,6 +165,18 @@ class MainActivity : ComponentActivity() {
                                 }
                             ) {
                                 SongCompositionScreen(lessonViewModel, songCompositionViewModel)
+                            }
+                            // ログイン画面
+                            composable(
+                                route = "loginScreen",
+                            ) {
+                                LoginScreen(navController)
+                            }
+                            // 新規登録画面
+                            composable(
+                                route = "newRegistrationScreen",
+                            ) {
+                                NewRegistrationScreen(navController)
                             }
                         }
                     }
