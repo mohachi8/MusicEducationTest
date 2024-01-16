@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.musiceducationtest.R
 import com.example.musiceducationtest.ui.components.BlockArea
 import com.example.musiceducationtest.ui.components.ControlButtons
@@ -31,7 +32,8 @@ import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 @Composable
 fun SongCompositionScreen(
     lessonViewModel: LessonViewModel,
-    songCompositionViewModel: SongCompositionViewModel
+    songCompositionViewModel: SongCompositionViewModel,
+    navController: NavController,
 ) {
     val lesson by lessonViewModel.selectedLesson.collectAsState()
     val isPlaying =
@@ -96,7 +98,7 @@ fun SongCompositionScreen(
                 .border(width = 2.dp, color = Color(0xFF424242), shape = Shapes.small)
         ) {
             // 操作ボタンエリア
-            ControlButtons(lessonViewModel, songCompositionViewModel)
+            ControlButtons(lessonViewModel, songCompositionViewModel, navController)
 
             // 選択肢
             Box(

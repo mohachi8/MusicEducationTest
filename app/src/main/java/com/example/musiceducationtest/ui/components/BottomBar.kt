@@ -44,7 +44,12 @@ fun BottomBar(
 
     // ダイアログの表示（やめるボタンを押した時の処理）
     if (showDialog) {
-        ConfirmExitDialog(navController, bottomBarViewModel, musicPlayerViewModel,songCompositionViewModel)
+        ConfirmExitDialog(
+            navController,
+            bottomBarViewModel,
+            musicPlayerViewModel,
+            songCompositionViewModel
+        )
     }
 
     Row(
@@ -77,7 +82,7 @@ fun BottomBar(
             imageVector = Icons.Default.ArrowBackIosNew,
             label = "もどる",
             backgroundColor = Teal200,
-            enabled = currentRoute == "songCompositionScreen",
+            enabled = currentRoute == "songCompositionScreen" || currentRoute == "explanationScreen2",
             onClick = {
                 navController.navigateUp()
             }
@@ -88,9 +93,14 @@ fun BottomBar(
             imageVector = Icons.Default.ArrowForwardIos,
             label = "すすむ",
             backgroundColor = Purple500,
-            enabled = currentRoute == "explanationScreen",
+            enabled = currentRoute == "explanationScreen" || currentRoute == "explanationScreen2",
             onClick = {
-                navController.navigate("songCompositionScreen")
+                if (currentRoute == "explanationScreen") {
+                    navController.navigate("explanationScreen2")
+                } else {
+                    navController.navigate("songCompositionScreen")
+                }
+//                navController.navigate("songCompositionScreen")
             }
         )
     }

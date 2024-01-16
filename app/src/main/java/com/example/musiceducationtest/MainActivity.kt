@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.musiceducationtest.ui.components.BottomBar
 import com.example.musiceducationtest.ui.components.TopBar
 import com.example.musiceducationtest.ui.screens.ExplanationScreen
+import com.example.musiceducationtest.ui.screens.ExplanationScreen2
 import com.example.musiceducationtest.ui.screens.LessonSelectionScreen
 import com.example.musiceducationtest.ui.screens.LoginScreen
 import com.example.musiceducationtest.ui.screens.NewRegistrationScreen
@@ -136,6 +137,36 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 ExplanationScreen(lessonViewModel)
                             }
+                            // 問題説明画面2
+                            composable(
+                                route = "explanationScreen2",
+                                enterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                exitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popEnterTransition = {
+                                    slideIntoContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                },
+                                popExitTransition = {
+                                    slideOutOfContainer(
+                                        towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
+                                        animationSpec = tween(700)
+                                    )
+                                }
+                            ) {
+                                ExplanationScreen2()
+                            }
                             // 学習画面
                             composable(
                                 route = "songCompositionScreen",
@@ -164,7 +195,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             ) {
-                                SongCompositionScreen(lessonViewModel, songCompositionViewModel)
+                                SongCompositionScreen(lessonViewModel, songCompositionViewModel,navController)
                             }
                             // ログイン画面
                             composable(

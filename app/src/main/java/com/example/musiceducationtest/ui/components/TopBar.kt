@@ -93,6 +93,7 @@ fun getTitleForRoute(route: String?): String {
         "loginScreen" -> "ログイン"
         "newRegistrationScreen" -> "アカウントを さくせい"
         "explanationScreen" -> "せつめい"
+        "explanationScreen2" -> "がめんの せつめい"
         "songCompositionScreen" -> "しょうせつを ならびかえて もとの曲を さいげん しましょう。"
         else -> "エラー：画面が選択されていません。"
     }

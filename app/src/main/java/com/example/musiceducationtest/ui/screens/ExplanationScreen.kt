@@ -34,13 +34,17 @@ fun ExplanationScreen(lessonViewModel: LessonViewModel) {
             // それぞれのレッスンに対応した説明を表示
             Text(text = lesson?.description ?: "説明なし", fontSize = 20.sp)
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-            Text(text = "したの おんがくプレイヤーで きょくを ききましょう.", fontSize = 20.sp)
+            Text(text = "これから しょうせつをくみたてて おてほんのきょくを さいげん します．", fontSize = 20.sp)
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-            Text(text = "きけたら，つぎに すすみましょう.", fontSize = 20.sp)
+            Text(text = "したの おんがくプレイヤーで おてほんの きょくを ききましょう.", fontSize = 20.sp)
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Text(text = "きけたら みぎしたの「すすむ」ボタンをおして つぎに すすみましょう.", fontSize = 20.sp)
         }
         Column(modifier = Modifier.weight(0.3f)) {
             Image(

@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.musiceducationtest.ui.theme.Shapes
 import com.example.musiceducationtest.viewmodel.LessonViewModel
 import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
@@ -39,7 +40,8 @@ import com.example.musiceducationtest.viewmodel.SongCompositionViewModel
 @Composable
 fun ControlButtons(
     lessonViewModel: LessonViewModel,
-    songCompositionViewModel: SongCompositionViewModel
+    songCompositionViewModel: SongCompositionViewModel,
+    navController: NavController,
 ) {
     val lesson by lessonViewModel.selectedLesson.collectAsState()
     val isCorrectOrder by songCompositionViewModel.isCorrectOrder.collectAsState() // 正解かどうか
@@ -163,7 +165,7 @@ fun ControlButtons(
         if (showDialog) {
             AlertDialog(
                 onDismissRequest = { songCompositionViewModel.toggleDialog(false) },
-                title = { Text("答えあわせ") },
+                title = { Text("こたえあわせ") },
                 text = {
                     // 答えあわせの結果を表示
                     if (isCorrectOrder != null) {
@@ -175,7 +177,7 @@ fun ControlButtons(
                                     contentDescription = "正解",
                                     tint = Color.Green
                                 )
-                                Text("正解！", color = Color.Green)
+                                Text("せいかい！", color = Color.Green)
                             }
                         } else {
                             // 不正解の場合の表示
@@ -185,18 +187,32 @@ fun ControlButtons(
                                     contentDescription = "不正解",
                                     tint = Color.Red
                                 )
-                                Text("不正解！", color = Color.Red)
+                                Text("まちがっています．もういちど かんがえてみよう．", color = Color.Red)
                             }
                         }
                     }
                 },
+                // 正解していた時のみ，次の画面に遷移できるようにする．
                 confirmButton = {
+                    if (isCorrectOrder == true) {
+                        TextButton(
+                            onClick = {
+                                songCompositionViewModel.toggleDialog(false)
+                                navController.navigate("lessonSelectionScreen")
+                            }
+                        ) {
+                            Text("おわる")
+                        }
+                    }
+                },
+                // キャンセルの処理
+                dismissButton = {
                     TextButton(
                         onClick = {
                             songCompositionViewModel.toggleDialog(false)
                         }
                     ) {
-                        Text("とじる")
+                        Text("もどる")
                     }
                 }
             )
